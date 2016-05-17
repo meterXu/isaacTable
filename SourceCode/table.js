@@ -1,5 +1,6 @@
 ﻿//meter的表控件，纯手写
 function GridData(option) {
+    var _this = this;//保存作用域;
     if (option.tableId == null || option.tableId == "") {
         throw "未指定tableId";
     }
@@ -170,7 +171,7 @@ function GridData(option) {
             th += "<th class='number'></th>";
         }
         if (_option.checkBox) {//是否显示复选框
-            th += "<th style='width:15px;'><input type='checkbox' class='chk' id='"+nojTableId+"_chkAll' onclick='ChkAll(this)'/></th>";//添加单选框
+            th += "<th style='width:15px;'><input type='checkbox' class='chk' id='" + nojTableId + "_chkAll' onclick='ChkAll(this)'/></th>";//添加单选框
         }
         for (var i = 1; i < _option.column[0].length; i++) {
             if (_option.column[0][i].width)
@@ -215,12 +216,11 @@ function GridData(option) {
         $("#" + _option.foolerId).addClass("page-left left");
         var one = (data.Total == 0) ? 0 : (_option.param.Page - 1) * _option.param.RP + 1;
         var two = _option.param.Page * _option.param.RP <= data.Total ? _option.param.Page * _option.param.RP : data.Total;
-        $("#" + _option.foolerId).append("<div style='float:left'>第" + one + "-" + two + "条  /  共" + data.Total + "条数据</div>");
+        $("#" + _option.foolerId).append("<div class='page-txt'>第" + one + "-" + two + "条  /  共" + data.Total + "条数据</div>");
     };
 
     //加载每页显示页数
     function loadPageList() {
-
         if (_option.pageList.length > 0) {
             var select = "<select id='" + _option.pageSelect + "' class='select-option'>";
             for (var i = 0; i < _option.pageList.length; i++) {
@@ -233,12 +233,12 @@ function GridData(option) {
         $("#" + _option.selectionId).append("<div class='refresh' title='刷新'></div>");
 
         $("#" + _option.selectionId + " .refresh").click(function () {
-            _option.reLoad();
+            _this.ReLoad();
         });
         $("#" + _option.pageSelect).change(function () {
             _option.param.Page = 1;
             _option.param.RP = this.value;
-            _option.reLoad();
+            _this.ReLoad();
         });
     }
     //加载分页
@@ -306,7 +306,7 @@ function GridData(option) {
                     default:
                         gotoPage = parseInt(this.innerHTML.toLowerCase().replace("<a>", "").replace("</a>"));
                 }
-                _option.pagination(gotoPage);
+                _this.LoadDataPage(gotoPage);
 
             });
         });
@@ -392,7 +392,7 @@ function GridData(option) {
         $(_option.tableId + " .datagrid-cell").mousemove(function (ev) {//单元格鼠标移动
             var e = ev;
             oldWidth = this.offsetWidth;
-            if ((computePx(this) + oldWidth) - e.clientX <=3 && (computePx(this) + oldWidth) >e.clientX) {
+            if ((computePx(this) + oldWidth) - e.clientX <= 3 && (computePx(this) + oldWidth) > e.clientX) {
                 $(this).attr("style", "cursor:e-resize");
                 oldPointX = e.clientX;
                 isResize = true;
@@ -400,7 +400,7 @@ function GridData(option) {
                 $(this).removeAttr("style");
                 isResize = false;
             }
-         
+
         });
 
         $(_option.tableId + " .datagrid-cell").mousedown(function (ev) {//单元格鼠标按下
@@ -430,7 +430,7 @@ function GridData(option) {
                         }
                         $(".lineContent").text(number);
                     }
-                  
+
                 });
                 $(".layout").mouseup(function (ev2) {
                     var e = ev2;
@@ -444,7 +444,7 @@ function GridData(option) {
                     $(".layout").remove();
                 });
             }
-           
+
 
 
         });
@@ -509,4 +509,10 @@ function CheckNull(value) {
     } else {
         return value;
     }
+}
+
+$.table = function (options) {
+    var table = new GridData(options);
+    table.loadData();
+    return table;
 }

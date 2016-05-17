@@ -45,13 +45,7 @@
     position: relative;
     top: 8px;
     left: 8px;
-    background-image: url(loading.gif);
-}
-
-.select-option {
-    float: left;
-    position: relative;
-    top: -2px;
+    background-image: url("loading.gif");
 }
 
 .refresh {
@@ -156,4 +150,9 @@
     z-index: 9998;
     background-color: rgba(255, 255, 255, 0);
     cursor: e-resize;
+}
+.page-txt {
+    float: left;
+    font-size: 14px;
+    color: gray;
 }
