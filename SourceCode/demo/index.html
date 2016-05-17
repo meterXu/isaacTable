@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TableDemo</title>
+    <link href="style.css" rel="stylesheet" />
+    <link href="../table.css" rel="stylesheet" />
+    <script type="text/javascript" src="jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../table.min.js"></script>
+    <script type="text/javascript">
+        var demo;
+        $(function () {
+            
+            var option = {
+                checkBox: true,
+                rowNumber: true,
+                selectOnCheck:true,
+                tableId: "#demo", //表的id
+                param: new DataGridParam(1, 4), //分页对象
+                pageList: [4, 15, 20], //每页显示数据个数
+                toolbar: [{
+                    id: "delete",
+                    icon:'icon-trash',
+                    text: '删除',
+                    handler: function () {
+                        if (demo.getSelection().length <= 0) {
+                            alert("请先选择需要删除的数据！");
+                        } else {
+                            if (confirm('确认删除这' + demo.getSelection().length + '条数据吗？')) {
+                                alert("删除成功");
+                            }
+                        }
+                    }
+                }],
+                tableHeader: $("#tabdiv").html(),
+                column: [[
+                    { title: "ck", field: 'id' },
+                    { title: '姓名', field: 'name', width: "135px" },
+                    {
+                        title: "性别", field: "sex", formatter: function (val) {
+                            switch (val) {
+                            case 1:
+                                return "<span style='color:green;font-weight:bold'>男</span>";
+                            default:
+                                return "<span style='color:red;font-weight:bold'>女</span>";
+                            }
+                        }
+                    },
+                    { title: "年龄", field: "age" },
+                    { title: "学历", field: "edu" },
+                    {
+                        title: "备注", field: "remark",width: "135px", formatter: function (n, val, data) {
+                            return "<input type='text' class='remarktext'/><input class='remarkbtn' type='button' value='确定'/>";
+                        }
+                    },
+                    {
+                        title: "操作", field: "id", formatter: function (val, n, data) {
+                            var a = "<a href='javascript:alert(\""+n+"\");'>更新</a>";
+                            return a;
+                        }
+                    }
+                ]],
+                tdata: {
+                    Total: 8,
+                    Rows: [
+                        { "id": 0, "name": '张三', "sex": 1, "age": 25, "edu": '本科' },
+                        { "id": 1, "name": '李四', "sex": 0, "age": 24, "edu": '大专' },
+                        { "id": 2, "name": '王五', "sex": 1, "age": 22, "edu": '博士'},
+                        { "id": 2, "name": '赵五', "sex": 0, "age": 28, "edu": '本科' }
+                    ]
+                }
+            };
+            demo=$.table(option);
+        });
+    </script>
+    <style type="text/css">
+        h1 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .remarktext {
+            height: 20px;
+            width: 50px;
+        }
+        .remarkbtn {
+            height: 24px;
+            width: 50px;
+            margin-left: 5px;
+        }
+        #tabdiv {
+            display: none 
+        }
+        .tab li {
+            float: left;
+            height: 33px;
+            width: 110px;
+            line-height: 33px;
+            text-align: center;
+            border: 1px solid #d5d5d5;
+            border-right: none;
+            border-bottom: none;
+            cursor: pointer;
+        }
+        .selected {
+            font-weight: bold;
+            color: orange;
+        }
+        
+    </style>
+</head>
+<body>
+    <div style="width: 800px; margin: 100px auto 10px auto">
+        <h1>表控件demo</h1>
+        <table id="demo"></table>
+    </div>
+    <div id="tabdiv">
+        <ul class="tab" >
+            <li class="selected">一班</li>
+            <li>二班</li>
+            <li style="border-right: 1px solid #d5d5d5;">三班</li>
+        </ul>
+       
+    </div>
+    <img src="table.jpg" alt="图例" style="margin: 0 auto;display: block"/>
+</body>
+</html>

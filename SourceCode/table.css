@@ -87,6 +87,19 @@
     min-width: 125px;
     *width: 130px;
 }
+.select-option {
+    -moz-min-width: 90px;
+    -ms-min-width: 90px;
+    -o-min-width: 90px;
+    -webkit-min-width: 90px;
+    min-width: 90px;
+    padding: 4px;
+    height: 30px;
+    font-size: 13px;
+    display: inline-block;
+    color: #808080;
+    border: 1px solid #ccc;
+}
 .table {
     table-layout:fixed;
 }
