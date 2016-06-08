@@ -1,136 +1,219 @@
-﻿.ul_table {
-    height: auto;
-    border: 1px solid #dddddd;
-    border-bottom: none;
-    border-left: none;
-}
-
-.ul_table_li {
-    width: 100%;
-}
-
-.ul_table_table {
-    width: 100%;
-    border: none;
+﻿.isaac_table {
     border-collapse: collapse;
+    border: 1px solid #ddd;
+    width: 100%;
 }
 
-    .ul_table_table td {
-        border-bottom: 1px solid #dddddd;
-        border-left: 1px solid #dddddd;
-        max-height: 60px;
-        padding: 10px;
-        padding-top: 6px;
+    .isaac_table th, .isaac_table td {
+        border: 1px solid #ddd;
+        padding: 4px 10px;
+        padding-right: 0;
+        overflow: hidden;
     }
 
-    .ul_table_table .t_one {
-        width: 10px;
+    .isaac_table th {
+        background-color: #f5f5f5;
+        font-weight: bold;
+        line-height: 18px;
+        height: auto;
+        text-align: center;
+        font-weight: bold;
+        color: #666;
+        font-size: 12px;
     }
 
-    .ul_table_table .tr_title {
-        background-color: #efefef;
+    .isaac_table td a {
+        color: #337ab7;
+        text-decoration: none;
     }
 
-    .ul_table_table tr:hover {
-        background-color: rgb(245, 245, 245);
+    .isaac_table .isaac_chk {
+        width: 14px;
+        height: 14px;
+        background-color: #fff;
+        margin-right: 12px;
     }
 
-.t_one {
-    width: 10px;
+    .isaac_table .isaac_number {
+        width: 20px;
+    }
+
+    .isaac_table tbody {
+        background: white;
+        font-family: "Microsoft Yahei";
+        font-size: 12px;
+    }
+
+        .isaac_table tbody tr:hover td {
+            background-color: #d9edf7;
+        }
+
+/*toolbar*/
+.isaac_operate {
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #d6d6d6;
+    padding-bottom: 5px;
 }
 
-.loading {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: 8px;
-    left: 8px;
-    background-image: url("loading.gif");
-}
-
-.refresh {
-    width: 20px;
-    height: 20px;
-    background: url('view_refresh.png') no-repeat center;
-    float: right;
-    margin-top: 8px;
-    margin-left: 8px;
-}
-
-    .refresh:hover {
-        margin-top: 7px;
-        margin-left: 7px;
-        -ms-border-radius: 4px;
-        border-radius: 4px;
-        border: 1px solid #dddddd;
-        background-color: white;
-        cursor: pointer;
+    .isaac_operate a {
+        display: inline-block;
+        font-size: 14px;
+        padding: 4px 10px 4px 5px;
+        text-decoration: none;
+        color: #337ab7;
     }
 
-.left {
+        .isaac_operate a:active {
+            color: red;
+        }
+/*page*/
+.isaac_page {
+    padding: 4px;
+    border: 1px solid #ddd;
+    border-top: none;
+    background-color: #f5f5f5;
+    overflow: hidden;
+    font-size: 12px;
+    font-family: "Microsoft Yahei";
+}
+
+.isaac_page_left {
+    float: left;
     color: #949495;
     line-height: 36px;
 }
 
-.chk {
-    width: 14px;
-    height: 14px;
-    background-color: white;
-}
-
-.selection {
+.isaac_selection {
     margin-left: 8px;
     -moz-min-width: 125px;
     -ms-min-width: 125px;
     -o-min-width: 125px;
     -webkit-min-width: 125px;
     min-width: 125px;
-    *width: 130px;
 }
-.select-option {
-    -moz-min-width: 90px;
-    -ms-min-width: 90px;
-    -o-min-width: 90px;
-    -webkit-min-width: 90px;
+
+.isaac_select_option {
+    float: left;
+    position: relative;
+    top: -2px;
     min-width: 90px;
+    vertical-align: middle;
     padding: 4px;
+    margin: 4px 0 0 5px;
     height: 30px;
     font-size: 13px;
     display: inline-block;
     color: #808080;
     border: 1px solid #ccc;
-}
-.table {
-    table-layout:fixed;
-}
-.table th, .table td {
-    padding: 5px 10px;
-    -moz-text-overflow:ellipsis;
-    text-overflow:ellipsis; 
-    overflow: hidden
-}
-.td_number {
-    -moz-text-overflow: clip !important;
-    text-overflow: clip !important;
+    font-family: "Microsoft Yahei";
+    font-size: 13px;
 }
 
-.number {
-     width: 10px;
+.isaac_refresh {
+    width: 20px;
+    height: 20px;
+    background: url('view_refresh.png') no-repeat center;
+    float: right;
+    margin-top: 8px;
+    margin-left: 8px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #dddddd;
 }
 
-.table-bordered {
-    margin-top: 0;
+    .isaac_refresh:hover {
+        background-color: white;
+        cursor: pointer;
+    }
+
+.isaac_pagination {
+    float: right;
+    margin-top: 3px;
 }
 
-.datagrid-th {
-    padding-right: 3px !important;
+    .isaac_pagination ul {
+        padding: 0;
+        margin: 0;
+    }
+    .isaac_pagination ul:after {
+        display: block;
+        content: "";
+        clear: both;
+    }
+
+
+        .isaac_pagination ul li {
+            display: inline;
+            float: left;
+            list-style: none;
+            cursor: pointer;
+        }
+
+            .isaac_pagination ul li a {
+                text-decoration: none;
+                padding: 4px 10px;
+                line-height: 20px;
+                float: left;
+                border: 1px solid #ddd;
+                border-left: none;
+                background-color: #fff;
+                color: #337ab7;
+            }
+            .isaac_pagination ul li.isaac_li_first a {
+                border-left: 1px solid #ddd;
+                border-radius: 4px 0 0 4px;
+            }
+            .isaac_pagination ul li.isaac_li_last a {
+                border-radius: 0 4px 4px 0
+            }
+
+.isaac_pagination_active a {
+    background-color: #f5f5f5 !important;
+    color: #999 !important;
+    cursor: default;
+}
+/*icon*/
+.icon {
+    width: 14px;
+    vertical-align: middle;
+    margin-top: -2px;
+    margin-right: 5px;
+    line-height: 14px;
+    height: 14px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-position: 14px 14px;
+    background-image: url(icons-white.png);
 }
 
-.datagrid-cell {
-    width: 100%;
+.icon-plus {
+    background-position: -408px -96px;
 }
 
-.verticalLine {
+.icon-edit {
+    background-position: -96px -72px;
+}
+
+.icon-trash {
+    background-position: -456px 0;
+}
+
+.icon-export {
+    background-position: -336px -96px;
+}
+
+.icon-print {
+    background-position: -96px -48px;
+}
+/*拖动单元格*/
+.isaac_layout {
+    position: absolute;
+    z-index: 9998;
+    background-color: rgba(255, 255, 255, 0);
+    cursor: e-resize;
+}
+
+.isaac_verticalLine {
     width: 2px;
     height: 100%;
     position: absolute;
@@ -139,7 +222,7 @@
     border-left: 1px #006dcc dotted;
 }
 
-.lineContent {
+.isaac_lineContent {
     position: absolute;
     top: 60px;
     left: 2px;
@@ -156,16 +239,4 @@
     background: #006dcc;
     border-radius: 4px;
     white-space: nowrap;
-}
-
-.layout {
-    position: absolute;
-    z-index: 9998;
-    background-color: rgba(255, 255, 255, 0);
-    cursor: e-resize;
-}
-.page-txt {
-    float: left;
-    font-size: 14px;
-    color: gray;
 }

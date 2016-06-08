@@ -6,16 +6,17 @@ function GridData(option) {
     }
     //设置默认值
     var _option = {
-        checkBox: true,//是否显示复选框
-        rowNumber: true,//是否显示编号
-        isFooter: true,//是否显示底部
-        isPagination: true,//是否显示分页
-        param: new DataGridParam(1, 5),//默认分页对象
-        textAlign: 'left',//默认文字水平排列方式
-        isCheckNull: true,//检查空值
-        selectOnCheck: true,//选中数据同时选中复选框
-        multipleSelect: true//是否可以多个选择
-    };
+        checkBox: true, //是否显示复选框
+        rowNumber: true, //是否显示编号
+        isFooter: true, //是否显示底部
+        isPagination: true, //是否显示分页
+        param: new DataGridParam(1, 5), //默认分页对象
+        textAlign: 'left', //默认文字水平排列方式
+        isCheckNull: true, //检查空值
+        selectOnCheck: true, //选中数据同时选中复选框
+        multipleSelect: true, //是否可以多个选择
+        cellResize: true//是否可以拖动单元格
+};
     //赋值
     _option.url = option.url;
     _option.column = option.column;
@@ -66,10 +67,10 @@ function GridData(option) {
     _option.baseToolbar = nojTableId + "_baseToolbar";
     //table加上底部
     $("#" + nojTableId + "_base_footer").remove();
-    var selection = "<div id='" + _option.selectionId + "' class='page-left left selection'></div>";
-    $(_option.tableId).after(" <div id='" + nojTableId + "_base_footer' class='page cf'>" +
+    var selection = "<div id='" + _option.selectionId + "' class='isaac_page_left isaac_selection'></div>";
+    $(_option.tableId).after(" <div id='" + nojTableId + "_base_footer' class='isaac_page'>" +
         "<div id='" + _option.foolerId + "'></div>" + selection +
-        "<div class='pagination right'>" +
+        "<div class='isaac_pagination'>" +
         "<ul id='" + _option.paginationId + "' class='right'></ul>" +
         "</div></div>");
 
@@ -81,7 +82,7 @@ function GridData(option) {
     //返回选中的值集合
     this.getSelection = function () {
         var selectValue = new Array();
-        $(_option.tableId).find("input[name='chk']").each(function (i, n) {
+        $(_option.tableId).find("input[name='isaac_chk']").each(function (i, n) {
             if (n.checked) {
                 selectValue.push(n.value);
             }
@@ -164,29 +165,29 @@ function GridData(option) {
     //生成表
     function priveTable(data) {
         //给table加上样式
-        $(_option.tableId).addClass("table table-bordered table-striped table-hover with-check").attr("style", "width: 100%");
+        $(_option.tableId).addClass("isaac_table").attr("style", "width: 100%");
         var th = "";
         var tr = "";
         if (_option.rowNumber) {//是否显示编号
-            th += "<th class='number'></th>";
+            th += "<th class='isaac_number'></th>";
         }
         if (_option.checkBox) {//是否显示复选框
-            th += "<th style='width:15px;'><input type='checkbox' class='chk' id='" + nojTableId + "_chkAll' onclick='ChkAll(this)'/></th>";//添加单选框
+            th += "<th style='width:15px;'><input type='checkbox' class='isaac_chk' id='" + nojTableId + "_chkAll' onclick='ChkAll(this)'/></th>";//添加单选框
         }
         for (var i = 1; i < _option.column[0].length; i++) {
             if (_option.column[0][i].width)
-                th += "<th class='datagrid-th' style='width:" + _option.column[0][i].width + "'><div class='datagrid-cell'>" + _option.column[0][i].title + "</div></th>";//创建标题
+                th += "<th class='isaac_table_th' style='width:" + _option.column[0][i].width + "'><div class='isaac_table_cell'>" + _option.column[0][i].title + "</div></th>";//创建标题
             else {
-                th += "<th class='datagrid-th' ><div class='datagrid-cell'>" + _option.column[0][i].title + "</div></th>";//创建标题
+                th += "<th class='isaac_table_th' ><div class='isaac_table_cell'>" + _option.column[0][i].title + "</div></th>";//创建标题
             }
         }
         for (var j = 0; j < data.Rows.length; j++) {
             var td = "";
             var numbert = parseInt((_option.param.Page - 1) * _option.param.RP + j);//数据编号,从0开始
             if (_option.rowNumber)
-                td += "<td class='td_number'>" + (numbert + 1) + "</td>";
+                td += "<td class='isaac_td_number'>" + (numbert + 1) + "</td>";
             if (_option.checkBox)
-                td += "<td class='t_one'><input type='checkbox' class='chk' id=" + nojTableId + "_chk_" + j + " name='chk' value=\"" + data.Rows[j][_option.column[0][0].field] + "\"/></td>";
+                td += "<td class='t_one'><input type='checkbox' class='isaac_chk' id=" + nojTableId + "_chk_" + j + " name='isaac_chk' value=\"" + data.Rows[j][_option.column[0][0].field] + "\"/></td>";
             for (var k = 1; k < _option.column[0].length; k++) {
                 if (_option.column[0][k].formatter)
                     td += "<td>" + _option.column[0][k].formatter(data.Rows[j][_option.column[0][k].field], numbert, data.Rows[j]) + "</td>";
@@ -213,7 +214,7 @@ function GridData(option) {
     //加载底部信息栏
     function loadFooter(data) {
         //加载左下角
-        $("#" + _option.foolerId).addClass("page-left left");
+        $("#" + _option.foolerId).addClass("isaac_page_left");
         var one = (data.Total == 0) ? 0 : (_option.param.Page - 1) * _option.param.RP + 1;
         var two = _option.param.Page * _option.param.RP <= data.Total ? _option.param.Page * _option.param.RP : data.Total;
         $("#" + _option.foolerId).append("<div class='page-txt'>第" + one + "-" + two + "条  /  共" + data.Total + "条数据</div>");
@@ -222,7 +223,7 @@ function GridData(option) {
     //加载每页显示页数
     function loadPageList() {
         if (_option.pageList.length > 0) {
-            var select = "<select id='" + _option.pageSelect + "' class='select-option'>";
+            var select = "<select id='" + _option.pageSelect + "' class='isaac_select_option'>";
             for (var i = 0; i < _option.pageList.length; i++) {
                 select += "<option value='" + _option.pageList[i] + "'>每页" + _option.pageList[i] + "条</option>";
             }
@@ -230,7 +231,7 @@ function GridData(option) {
             $("#" + _option.selectionId).append(select);
             $("#" + _option.pageSelect).val(_option.param.RP);
         }
-        $("#" + _option.selectionId).append("<div class='refresh' title='刷新'></div>");
+        $("#" + _option.selectionId).append("<div class='isaac_refresh' title='刷新'></div>");
 
         $("#" + _option.selectionId + " .refresh").click(function () {
             _this.ReLoad();
@@ -267,14 +268,14 @@ function GridData(option) {
                 if (_option.param.Page <= 3) {
                     for (var n = 1; n <= (_option.param.Page + 3 > pages ? pages : _option.param.Page + 3) ; n++) {
                         if (n == _option.param.Page)
-                            li += "<li class='active'><a>" + n + "</a></li>";
+                            li += "<li class='isaac_pagination_active'><a>" + n + "</a></li>";
                         else
                             li += "<li><a>" + n + "</a></li>";
                     }
                 } else {
                     for (var m = _option.param.Page - 3; m <= (_option.param.Page + 3 > pages ? pages : _option.param.Page + 3) ; m++) {
                         if (m == _option.param.Page)
-                            li += "<li class='active'><a>" + m + "</a></li>";
+                            li += "<li class='isaac_pagination_active'><a>" + m + "</a></li>";
                         else
                             li += "<li><a>" + m + "</a></li>";
                     }
@@ -310,8 +311,9 @@ function GridData(option) {
 
             });
         });
-        $("#" + _option.paginationId + " li:first").addClass("first");
-        $("#" + _option.paginationId + " li:contains(" + (_option.param.Page) + ")").addClass("active");
+        $("#" + _option.paginationId + " li:first").addClass("isaac_li_first");
+        $("#" + _option.paginationId + " li:last").addClass("isaac_li_last");
+        $("#" + _option.paginationId + " li:contains(" + (_option.param.Page) + ")").addClass("isaac_pagination_active");
     };
 
     //加载表头
@@ -328,7 +330,7 @@ function GridData(option) {
         $("#" + _option.baseToolbar).remove();
         $("#" + nojTableId + "_tableHeader").remove();
         if (data != null && data.length >= 1) {
-            var toobar = "<div id='" + _option.baseToolbar + "' class='operate'>";
+            var toobar = "<div id='" + _option.baseToolbar + "' class='isaac_operate'>";
             for (var i = 0; i < data.length; i++) {
                 toobar += " <a href='javascript:void(0);' id='" + _option.tableId + "_" + data[i].id + "' ><i class='icon " + data[i].icon + "'></i>" + data[i].text + "</a>";
             }
@@ -386,71 +388,74 @@ function GridData(option) {
 
     //拖拉列宽
     function cellResize() {
-        var oldWidth = 0;
-        var oldPointX = 0;
-        var isResize = false;
-        $(_option.tableId + " .datagrid-cell").mousemove(function (ev) {//单元格鼠标移动
-            var e = ev;
-            oldWidth = this.offsetWidth;
-            if ((computePx(this) + oldWidth) - e.clientX <= 3 && (computePx(this) + oldWidth) > e.clientX) {
-                $(this).attr("style", "cursor:e-resize");
-                oldPointX = e.clientX;
-                isResize = true;
-            } else {
-                $(this).removeAttr("style");
-                isResize = false;
-            }
-
-        });
-
-        $(_option.tableId + " .datagrid-cell").mousedown(function (ev) {//单元格鼠标按下
-            if (isResize) {
-                var ft = this;
-                var width = $(_option.tableId)[0].offsetWidth;
-                var height = $(_option.tableId)[0].offsetHeight;
-                var top = computePy($(_option.tableId)[0]);
-                var left = computePx($(_option.tableId)[0]);
-                var div = "<div class='layout' style='width:" + width + "px;height:" + height + "px;top:" + top + "px;left:" + left + "px'>" +
-                    "<div class='verticalLine' style='left:" + (oldPointX - left + 5) + "px'><div class='lineContent'>左右拖动</div></div></div>";
-                $(this).after(div);
-                $(".layout").mousemove(function (ev2) {
-                    if (isResize) {
-                        var e = ev2;
-                        $(".verticalLine").css("left", (e.clientX - left));
-                        var number = oldWidth + 14 - (oldPointX + 6) + (e.clientX);
-                        if (number <= 30) {
-                            number = "亲,列宽太小了";
-                            $(".lineContent").css("background-color", "#d60000");
-                            $(".verticalLine").css("border-left-color", "#d60000");
-                        }
-                        else {
-                            number = "宽度:" + number;
-                            $(".lineContent").css("background-color", "#006dcc");
-                            $(".verticalLine").css("border-left-color", "#006dcc");
-                        }
-                        $(".lineContent").text(number);
-                    }
-
-                });
-                $(".layout").mouseup(function (ev2) {
-                    var e = ev2;
+        if (_option.cellResize) {
+            var oldWidth = 0;
+            var oldPointX = 0;
+            var isResize = false;
+            $(_option.tableId + " .isaac_table_cell").mousemove(function (ev) {//单元格鼠标移动
+                var e = ev;
+                oldWidth = this.offsetWidth;
+                if ((computePx(this) + oldWidth) - e.clientX <= 3 && (computePx(this) + oldWidth) > e.clientX) {
+                    $(this).attr("style", "cursor:e-resize");
+                    oldPointX = e.clientX;
+                    isResize = true;
+                } else {
+                    $(this).removeAttr("style");
                     isResize = false;
-                    var number = oldWidth + 14 - (oldPointX + 6) + (e.clientX);
-                    if (number < 30)
-                        number = 30;
-                    $(ft).parent().animate({ width: number }, 500);
-                    $(_option.tableId).unbind("mousemove");
+                }
 
-                    $(".layout").remove();
-                });
-            }
+            });
+
+            $(_option.tableId + " .isaac_table_cell").mousedown(function (ev) {//单元格鼠标按下
+                if (isResize) {
+                    var ft = this;
+                    var width = $(_option.tableId)[0].offsetWidth;
+                    var height = $(_option.tableId)[0].offsetHeight;
+                    var top = computePy($(_option.tableId)[0]);
+                    var left = computePx($(_option.tableId)[0]);
+                    var div = "<div class='isaac_layout' style='width:" + width + "px;height:" + height + "px;top:" + top + "px;left:" + left + "px'>" +
+                        "<div class='isaac_verticalLine' style='left:" + (oldPointX - left + 5) + "px'><div class='isaac_lineContent'>左右拖动</div></div></div>";
+                    $(this).after(div);
+                    $(".isaac_layout").mousemove(function (ev2) {
+                        if (isResize) {
+                            var e = ev2;
+                            $(".isaac_verticalLine").css("left", (e.clientX - left));
+                            var number = oldWidth + 14 - (oldPointX + 6) + (e.clientX) - 10;
+                            if (number <= 30) {
+                                number = "亲,列宽太小了";
+                                $(".isaac_lineContent").css("background-color", "#d60000");
+                                $(".isaac_verticalLine").css("border-left-color", "#d60000");
+                            }
+                            else {
+                                number = "宽度:" + number;
+                                $(".isaac_lineContent").css("background-color", "#006dcc");
+                                $(".isaac_verticalLine").css("border-left-color", "#006dcc");
+                            }
+                            $(".isaac_lineContent").text(number);
+                        }
+
+                    });
+                    $(".isaac_layout").mouseup(function (ev2) {
+                        var e = ev2;
+                        isResize = false;
+                        var number = oldWidth + 14 - (oldPointX + 6) + (e.clientX)-10;
+                        if (number < 30)
+                            number = 30;
+                        $(ft).parent().animate({ width: number }, 500);
+                        $(_option.tableId).unbind("mousemove");
+
+                        $(".isaac_layout").remove();
+                    });
+                }
 
 
 
-        });
-        $(_option.tableId + " .datagrid-cell").mouseup(function (ev) {//单元格鼠标弹起
-            isResize = false;
-        });
+            });
+            $(_option.tableId + " .datagrid-cell").mouseup(function (ev) {//单元格鼠标弹起
+                isResize = false;
+            });
+        }
+
     }
 }
 
@@ -488,13 +493,13 @@ function DataGridParam(page, rp) {
 //全选函数
 function ChkAll(dmo) {
     if (dmo.checked == true) {
-        $("input[name=chk]").each(function (i, n) {
+        $("input[name=isaac_chk]").each(function (i, n) {
             if (n.checked == false) {
                 n.checked = true;
             }
         });
     } else {
-        $("input[name=chk]").each(function (i, n) {
+        $("input[name=isaac_chk]").each(function (i, n) {
             if (n.checked == true) {
                 n.checked = false;
             }
