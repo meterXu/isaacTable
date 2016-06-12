@@ -391,14 +391,18 @@ function GridData(option) {
         if (_option.cellResize) {
             var oldWidth = 0;
             var oldPointX = 0;
+            var tdPaddingLeft=0;
+            var tdBorderLeft=0;
             var isResize = false;
             $(_option.tableId + " .isaac_table_cell").mousemove(function (ev) {//单元格鼠标移动
                 var e = ev;
                 oldWidth = this.offsetWidth;
-                if ((computePx(this) + oldWidth) - e.clientX <= 3 && (computePx(this) + oldWidth) > e.clientX) {
+                if ((computePx(this) + oldWidth) - e.clientX <= 3&& (computePx(this) + oldWidth) > e.clientX) {
                     $(this).attr("style", "cursor:e-resize");
                     oldPointX = e.clientX;
                     isResize = true;
+                    tdPaddingLeft=this.offsetLeft;
+                    tdBorderLeft=this.offsetParent.clientLeft;
                 } else {
                     $(this).removeAttr("style");
                     isResize = false;
@@ -420,14 +424,15 @@ function GridData(option) {
                         if (isResize) {
                             var e = ev2;
                             $(".isaac_verticalLine").css("left", (e.clientX - left));
-                            var number = oldWidth + 14 - (oldPointX + 6) + (e.clientX) - 10;
-                            if (number <= 30) {
-                                number = "亲,列宽太小了";
+                            var number = oldWidth -oldPointX +e.clientX - 2;
+
+                            if (number < 30) {
+                                number = "亲,列宽太小了["+(number+tdPaddingLeft+tdBorderLeft)+"]";
                                 $(".isaac_lineContent").css("background-color", "#d60000");
                                 $(".isaac_verticalLine").css("border-left-color", "#d60000");
                             }
                             else {
-                                number = "宽度:" + number;
+                                number = "宽度:" + (number+tdPaddingLeft+tdBorderLeft);
                                 $(".isaac_lineContent").css("background-color", "#006dcc");
                                 $(".isaac_verticalLine").css("border-left-color", "#006dcc");
                             }
@@ -438,10 +443,10 @@ function GridData(option) {
                     $(".isaac_layout").mouseup(function (ev2) {
                         var e = ev2;
                         isResize = false;
-                        var number = oldWidth + 14 - (oldPointX + 6) + (e.clientX)-10;
+                        var number = oldWidth -oldPointX +e.clientX-2;
                         if (number < 30)
-                            number = 30;
-                        $(ft).parent().animate({ width: number }, 500);
+                            number = 29;
+                        $(ft).parent().animate({ width: (number) }, 500);
                         $(_option.tableId).unbind("mousemove");
 
                         $(".isaac_layout").remove();
