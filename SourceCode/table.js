@@ -521,4 +521,3 @@ $.table = function (options) {
     table.loadData();
     return table;
 }
-//faewfaew
