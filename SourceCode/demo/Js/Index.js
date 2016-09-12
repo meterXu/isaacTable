@@ -34,19 +34,8 @@ $(function () {
                         alert("请先选择需要删除的数据！");
                     } else {
                         if (confirm('确认删除这' + demo.getSelection().length + '条数据吗？')) {
-                            $.ajax({
-                                url: "http://www.isaacxu.com/Home/DelTableDemo",
-                                type: "get",
-                                dataType: "jsonp",
-                                data:{
-                                    UserId: desKey,
-                                    Query: demo.getSelection().join(',')
-                                },
-                                success: function (res) {
 
-                                }
-                            })
-                            alert("删除成功");
+                            delData(demo.getSelection().join(','));
                         }
                     }
                 }
@@ -70,8 +59,8 @@ $(function () {
             { title: "职业", field: "Profession", width: "120px" },
             { title: "留言", field: "Message" },
             {
-                title: "操作", field: "id", width: "120px", formatter: function (val, n, data) {
-                    var a = "<a href='javascript:;'>删除</a>";
+                title: "操作", field: "Id", width: "120px", formatter: function (val, n, data) {
+                    var a = "<a href='javascript:;' onclick='btnDelData(\"" + val + "\")'>删除</a>";
                     return a;
                 }
             }
@@ -79,3 +68,35 @@ $(function () {
     };
     demo = $.table(option);
 });
+
+function btnDelData(val)
+{
+    if(confirm("你确定要删除这条数据吗？"))
+    {
+        delData(val)
+    }
+}
+
+function delData(val)
+{
+    $.ajax({
+        url: "http://www.isaacxu.com/Home/DelTableDemo",
+        type: "get",
+        dataType: "jsonp",
+        data: {
+            UserId: desKey,
+            Query: val
+        },
+        success: function (res) {
+            if (res) {
+                alert("删除成功");
+                demo.ReLoad();
+            }
+            else {
+                alert("删除失败");
+
+            }
+
+        }
+    })
+}
