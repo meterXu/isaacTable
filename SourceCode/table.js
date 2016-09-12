@@ -10,6 +10,8 @@ function GridData(option) {
         rowNumber: true, //是否显示编号
         isFooter: true, //是否显示底部
         isPagination: true, //是否显示分页
+        ajaxType:"post",//ajax请求类型
+        ajaxDataType:"json",//返回数据类型
         param: new DataGridParam(1, 5), //默认分页对象
         textAlign: 'left', //默认文字水平排列方式
         isCheckNull: true, //检查空值
@@ -22,6 +24,8 @@ function GridData(option) {
     _option.column = option.column;
     _option.tableId = option.tableId;
     _option.toolbar = option.toolbar;
+    _option.ajaxType = option.ajaxType;
+    _option.ajaxDataType=option.ajaxDataType;
     _option.tdata = option.tdata;
     _option.pageList = option.pageList;
     _option.tableHeader = option.tableHeader;
@@ -115,8 +119,8 @@ function GridData(option) {
         } else {
             $.ajax({
                 url: _option.url,
-                type: 'post',
-                dataType: 'json',
+                type: _option.ajaxType,
+                dataType: _option.ajaxDataType,
                 data: _option.param,
                 beforeSend: function () {
                     $("#" + _option.foolerId).html("<div class='loading'></div>");
