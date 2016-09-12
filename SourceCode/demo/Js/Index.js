@@ -42,7 +42,7 @@ $(function () {
                                     UserId: desKey,
                                     Query: demo.getSelection().join(',')
                                 },
-                                success: function () {
+                                success: function (res) {
 
                                 }
                             })
