@@ -69,7 +69,7 @@ $(function () {
     demo = $.table(option);
     $(".tab li").click(function () {
         var type = $(this).data("type");
-        param.Query = "Type[Equals]&" + type;
+        param.Query = "Type[Equal]&" + type;
         demo.ReLoad();
         $(".tab li").removeClass("selected");
         $(this).addClass("selected");
