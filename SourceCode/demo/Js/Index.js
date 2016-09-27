@@ -15,8 +15,8 @@ var option = {
     tableId: "#demo", //表的id
     param: param, //分页对象
     pageList: [10, 15, 20], //每页显示数据个数
-    ajaxType: "get",
-    ajaxDataType: "jsonp",
+    ajaxType: "get",//默认为post，demo使用跨越请求数据则使用get
+    ajaxDataType: "jsonp",//默认为json，demo使用跨越请求数据则使用jsonp
     toolbar: [{
         id: "add",
         icon: 'icon-plus',
