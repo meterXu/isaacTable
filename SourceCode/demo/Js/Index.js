@@ -6,6 +6,7 @@ var param = {
     Page: 1,
     UserId: desKey
 };
+
 var option = {
     checkBox: true,
     rowNumber: true,
@@ -13,7 +14,7 @@ var option = {
     selectOnCheck: true,
     tableId: "#demo", //表的id
     param: param, //分页对象
-    pageList: [5, 15, 20], //每页显示数据个数
+    pageList: [10, 15, 20], //每页显示数据个数
     ajaxType: "get",
     ajaxDataType: "jsonp",
     toolbar: [{
@@ -21,7 +22,51 @@ var option = {
         icon: 'icon-plus',
         text: '添加',
         handler: function () {
+            var index = layer.open({
+                title: "添加数据",
+                type: 1,
+                closeBtn: 0,
+                shift: 2,
+                btn: ['确定', '取消'],
+                shadeClose: true, //开启遮罩关闭
+                skin: 'layui-layer-demo', //加上边框
+                area: ['480px', '350px'], //宽高
+                content: $("#addModel").html(),
+                yes: function () {
+                    $(".addModelForm").validationEngine({
+                        "promptPosition": "centerRight"
+                    });
+                    if ($(".addModelForm").validationEngine("validate")) {
+                        var data = "{" +
+                            "\"Name\":\"" + $(".addModelForm:last #Name").val() + "\"," +
+                            "\"Sex\":\"" + $(".addModelForm:last #Sex").val() + "\"," +
+                            "\"Age\":\"" + $(".addModelForm:last #Age").val() + "\"," +
+                            "\"Profession\":\"" + $(".addModelForm:last #Profession").val() + "\"," +
+                            "\"Message\":\"" + $(".addModelForm:last #Message").val() + "\"" +
+                            "}";
+                        $.ajax({
+                            url: "http://www.isaacxu.com/Home/AddTableDemo",
+                            type: "get",
+                            dataType: "jsonp",
+                            data: {
+                                UserId: desKey,
+                                Query: data
+                            },
+                            success: function (res) {
+                                if (res) {
+                                    layer.close(index);
+                                    layer.msg("添加成功");
+                                }
+                                else {
+                                    layer.msg("添加失败");
+                                }
+                                demo.ReLoad();
+                            }
+                        })
+                    }
 
+                }
+            });
         }
     },
         {
@@ -65,11 +110,11 @@ var option = {
     ]]
 };
 $(function () {
-    option.tableHeader=$("#tabdiv").html();
+    option.tableHeader = $("#tabdiv").html();
     demo = $.table(option);
     $(".tab li").click(function () {
         var type = $(this).data("type");
-        param.Query = "Type[Equals]&" + type;
+        param.Query = "Type[Equal]&" + type;
         demo.ReLoad();
         $(".tab li").removeClass("selected");
         $(this).addClass("selected");
@@ -93,11 +138,11 @@ function delData(val) {
         },
         success: function (res) {
             if (res) {
-                alert("删除成功");
+                layer.msg("删除成功");
                 demo.ReLoad();
             }
             else {
-                alert("删除失败");
+                layer.msg("删除失败");
 
             }
 

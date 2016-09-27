@@ -123,7 +123,9 @@ function GridData(option) {
                 dataType: _option.ajaxDataType,
                 data: _option.param,
                 beforeSend: function () {
-                    $("#" + _option.foolerId).html("<div class='loading'></div>");
+                    //给table加上样式
+                    $(_option.tableId).addClass("isaac_table").attr("style", "width: 100%");
+                    $(_option.tableId).html("<tr><td><div class='loadDiv'><div class='loading'></div> 正在加载......</div></td></tr>");
                 },
                 success: function (data) {
                     _option.data = data;
@@ -168,8 +170,6 @@ function GridData(option) {
     };
     //生成表
     function priveTable(data) {
-        //给table加上样式
-        $(_option.tableId).addClass("isaac_table").attr("style", "width: 100%");
         var th = "";
         var tr = "";
         if (_option.rowNumber) {//是否显示编号
@@ -237,7 +237,7 @@ function GridData(option) {
         }
         $("#" + _option.selectionId).append("<div class='isaac_refresh' title='刷新'></div>");
 
-        $("#" + _option.selectionId + " .refresh").click(function () {
+        $("#" + _option.selectionId + " .isaac_refresh").click(function () {
             _this.ReLoad();
         });
         $("#" + _option.pageSelect).change(function () {

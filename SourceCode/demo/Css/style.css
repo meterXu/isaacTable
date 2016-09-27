@@ -61,3 +61,25 @@ h1 {
     font-weight: bold;
     color: orange;
 }
+.layui-layer-demo{background-color:#eee;}
+.layui-layer-demo .layui-layer-title{border:none; background-color:#333; color:#fff;}
+.formTable{
+    width: 90%;
+    margin: 10px auto;
+}
+.formTable td{
+    height: 30px;
+    line-height: 30px;
+}
+.txt{
+    height: 22px;
+    line-height: 22px;
+    border: 1px solid #d3d3d3;
+    width: 200px;
+    text-indent: 5px;
+}
+.area{
+    width:300px;
+    height:50px;
+    resize: none;
+}

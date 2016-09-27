@@ -121,6 +121,21 @@
     border: 1px solid #dddddd;
 }
 
+.loadDiv{
+  height: 35px;
+  line-height: 35px;  
+  text-align: center;
+}
+.loading{
+    width: 20px;
+    height: 20px;
+    background: url('loading.gif') no-repeat center;
+    display: inline-block;
+    margin-right: 2px;
+    position: relative;
+    top: 6px;
+}
+
     .isaac_refresh:hover {
         background-color: white;
         cursor: pointer;
