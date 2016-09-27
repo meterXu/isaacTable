@@ -34,7 +34,8 @@ var option = {
                 content: $("#addModel").html(),
                 yes: function () {
                     $(".addModelForm").validationEngine({
-                        "promptPosition": "centerRight"
+                        "promptPosition": "centerRight",
+                        scroll:false
                     });
                     if ($(".addModelForm").validationEngine("validate")) {
                         var data = "{" +
