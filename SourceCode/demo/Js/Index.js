@@ -1,4 +1,4 @@
-﻿var userTicket = "6BDACD76-5650-4078-A9E6-2862865AC52C";
+var userTicket = "6BDACD76-5650-4078-A9E6-2862865AC52C";
 var desKey = encMe('1460', userTicket);
 var demo;
 function btnDelData(val)
@@ -9,8 +9,7 @@ function btnDelData(val)
     }
 }
 
-function delData(val)
-{
+function delData(val) {
     $.ajax({
         url: "http://120.76.73.57:8081/Home/DelTableDemo",
         type: "get",
@@ -21,11 +20,11 @@ function delData(val)
         },
         success: function (res) {
             if (res) {
-                alert("删除成功");
+                layer.msg("删除成功");
                 demo.ReLoad();
             }
             else {
-                alert("删除失败");
+                layer.msg("删除失败");
 
             }
 
