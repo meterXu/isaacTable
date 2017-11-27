@@ -1,31 +1,38 @@
-﻿//meter的表控件，纯手写
-function GridData(option) {
-    var _this = this;//保存作用域;
-    if (option.tableId == null || option.tableId == "") {
-        throw "未指定tableId";
+﻿(function ($) {
+    $.fn.mtable = function (option) {
+        var _this = this;//保存作用域;
+        if (option.tableId == null || option.tableId == "") {
+            throw "未指定tableId";
+        }
+        //设置默认值
+        var _option = {
+            checkBox: true, //是否显示复选框
+            rowNumber: true, //是否显示编号
+            isFooter: true, //是否显示底部
+            isPagination: true, //是否显示分页
+            ajaxType: "post",//ajax请求类型
+            ajaxDataType: "json",//返回数据类型
+            param: new DataGridParam(1, 5), //默认分页对象
+            textAlign: 'left', //默认文字水平排列方式
+            isCheckNull: true, //检查空值
+            selectOnCheck: true, //选中数据同时选中复选框
+            multipleSelect: true, //是否可以多个选择
+            cellResize: true//是否可以拖动单元格
+        };
     }
-    //设置默认值
-    var _option = {
-        checkBox: true, //是否显示复选框
-        rowNumber: true, //是否显示编号
-        isFooter: true, //是否显示底部
-        isPagination: true, //是否显示分页
-        ajaxType:"post",//ajax请求类型
-        ajaxDataType:"json",//返回数据类型
-        param: new DataGridParam(1, 5), //默认分页对象
-        textAlign: 'left', //默认文字水平排列方式
-        isCheckNull: true, //检查空值
-        selectOnCheck: true, //选中数据同时选中复选框
-        multipleSelect: true, //是否可以多个选择
-        cellResize: true//是否可以拖动单元格
-};
+})(jQuery);
+
+
+//meter的表控件，纯手写
+function GridData(option) {
+
     //赋值
     _option.url = option.url;
     _option.column = option.column;
     _option.tableId = option.tableId;
     _option.toolbar = option.toolbar;
     _option.ajaxType = option.ajaxType;
-    _option.ajaxDataType=option.ajaxDataType;
+    _option.ajaxDataType = option.ajaxDataType;
     _option.tdata = option.tdata;
     _option.pageList = option.pageList;
     _option.tableHeader = option.tableHeader;
@@ -270,14 +277,14 @@ function GridData(option) {
                 li += "<li><a>" + 1 + "</a></li>" + "<li><a>" + 2 + "</a></li>" + "<li><a>" + 3 + "</a></li>"; break;
             default:
                 if (_option.param.Page <= 3) {
-                    for (var n = 1; n <= (_option.param.Page + 3 > pages ? pages : _option.param.Page + 3) ; n++) {
+                    for (var n = 1; n <= (_option.param.Page + 3 > pages ? pages : _option.param.Page + 3); n++) {
                         if (n == _option.param.Page)
                             li += "<li class='isaac_pagination_active'><a>" + n + "</a></li>";
                         else
                             li += "<li><a>" + n + "</a></li>";
                     }
                 } else {
-                    for (var m = _option.param.Page - 3; m <= (_option.param.Page + 3 > pages ? pages : _option.param.Page + 3) ; m++) {
+                    for (var m = _option.param.Page - 3; m <= (_option.param.Page + 3 > pages ? pages : _option.param.Page + 3); m++) {
                         if (m == _option.param.Page)
                             li += "<li class='isaac_pagination_active'><a>" + m + "</a></li>";
                         else
@@ -395,18 +402,18 @@ function GridData(option) {
         if (_option.cellResize) {
             var oldWidth = 0;
             var oldPointX = 0;
-            var tdPaddingLeft=0;
-            var tdBorderLeft=0;
+            var tdPaddingLeft = 0;
+            var tdBorderLeft = 0;
             var isResize = false;
             $(_option.tableId + " .isaac_table_cell").mousemove(function (ev) {//单元格鼠标移动
                 var e = ev;
                 oldWidth = this.offsetWidth;
-                if ((computePx(this) + oldWidth) - e.clientX <= 3&& (computePx(this) + oldWidth) > e.clientX) {
+                if ((computePx(this) + oldWidth) - e.clientX <= 3 && (computePx(this) + oldWidth) > e.clientX) {
                     $(this).attr("style", "cursor:e-resize");
                     oldPointX = e.clientX;
                     isResize = true;
-                    tdPaddingLeft=this.offsetLeft;
-                    tdBorderLeft=this.offsetParent.clientLeft;
+                    tdPaddingLeft = this.offsetLeft;
+                    tdBorderLeft = this.offsetParent.clientLeft;
                 } else {
                     $(this).removeAttr("style");
                     isResize = false;
@@ -428,15 +435,15 @@ function GridData(option) {
                         if (isResize) {
                             var e = ev2;
                             $(".isaac_verticalLine").css("left", (e.clientX - left));
-                            var number = oldWidth -oldPointX +e.clientX - 2;
+                            var number = oldWidth - oldPointX + e.clientX - 2;
 
                             if (number < 30) {
-                                number = "亲,列宽太小了["+(number+tdPaddingLeft+tdBorderLeft)+"]";
+                                number = "亲,列宽太小了[" + (number + tdPaddingLeft + tdBorderLeft) + "]";
                                 $(".isaac_lineContent").css("background-color", "#d60000");
                                 $(".isaac_verticalLine").css("border-left-color", "#d60000");
                             }
                             else {
-                                number = "宽度:" + (number+tdPaddingLeft+tdBorderLeft);
+                                number = "宽度:" + (number + tdPaddingLeft + tdBorderLeft);
                                 $(".isaac_lineContent").css("background-color", "#006dcc");
                                 $(".isaac_verticalLine").css("border-left-color", "#006dcc");
                             }
@@ -447,7 +454,7 @@ function GridData(option) {
                     $(".isaac_layout").mouseup(function (ev2) {
                         var e = ev2;
                         isResize = false;
-                        var number = oldWidth -oldPointX +e.clientX-2;
+                        var number = oldWidth - oldPointX + e.clientX - 2;
                         if (number < 30)
                             number = 29;
                         $(ft).parent().animate({ width: (number) }, 500);
