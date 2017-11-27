@@ -1,9 +1,10 @@
 ﻿(function ($) {
-    $.fn.mtable = function (option) {
+    /**
+     * 初始化控件iTable
+     * @param option 初始化参数
+     */
+    $.fn.iTable = function (option) {
         var _this = this;//保存作用域;
-        if (option.tableId == null || option.tableId == "") {
-            throw "未指定tableId";
-        }
         //设置默认值
         var _option = {
             checkBox: true, //是否显示复选框
@@ -17,8 +18,50 @@
             isCheckNull: true, //检查空值
             selectOnCheck: true, //选中数据同时选中复选框
             multipleSelect: true, //是否可以多个选择
-            cellResize: true//是否可以拖动单元格
+            cellResize: true//是否可以拖拉单元格
         };
+        //赋值
+        _option.url = option.url;
+        _option.column = option.column;
+        _option.tableId = option.tableId;
+        _option.toolbar = option.toolbar;
+        _option.ajaxType = option.ajaxType;
+        _option.ajaxDataType = option.ajaxDataType;
+        _option.tdata = option.tdata;
+        _option.pageList = option.pageList;
+        _option.tableHeader = option.tableHeader;
+        if (option.ajaxSuccess) {
+            _option.ajaxSuccess = option.ajaxSuccess;
+        }
+        if (option.loadSuccess) {
+            _option.loadSuccess = option.loadSuccess;
+        }
+        if (option.checkBox != null && option.checkBox == false) {
+            _option.checkBox = option.checkBox;
+        }
+        if (option.rowNumber != null && option.rowNumber == false) {
+            _option.rowNumber = option.rowNumber;
+        }
+        if (option.isFooter != null && option.isFooter == false) {
+            _option.isFooter = option.isFooter;
+        }
+        if (option.isPagination != null && option.isPagination == false) {
+            _option.isPagination = option.isPagination;
+        }
+        if (option.param != null) {
+            _option.param = option.param;
+        }
+        if (option.textAlign != null) {
+            _option.textAlign = option.textAlign;
+        }
+        if (option.isCheckNull != null) {
+            _option.isCheckNull = option.isCheckNull;
+        }
+        if (option.multipleSelect != null && option.multipleSelect == false) {
+            _option.multipleSelect = option.multipleSelect;
+        }
+
+
     }
 })(jQuery);
 
@@ -26,48 +69,6 @@
 //meter的表控件，纯手写
 function GridData(option) {
 
-    //赋值
-    _option.url = option.url;
-    _option.column = option.column;
-    _option.tableId = option.tableId;
-    _option.toolbar = option.toolbar;
-    _option.ajaxType = option.ajaxType;
-    _option.ajaxDataType = option.ajaxDataType;
-    _option.tdata = option.tdata;
-    _option.pageList = option.pageList;
-    _option.tableHeader = option.tableHeader;
-    if (option.ajaxSuccess) {
-        _option.ajaxSuccess = option.ajaxSuccess;
-    }
-    if (option.loadSuccess) {
-        _option.loadSuccess = option.loadSuccess;
-    }
-
-
-    if (option.checkBox != null && option.checkBox == false) {
-        _option.checkBox = option.checkBox;
-    }
-    if (option.rowNumber != null && option.rowNumber == false) {
-        _option.rowNumber = option.rowNumber;
-    }
-    if (option.isFooter != null && option.isFooter == false) {
-        _option.isFooter = option.isFooter;
-    }
-    if (option.isPagination != null && option.isPagination == false) {
-        _option.isPagination = option.isPagination;
-    }
-    if (option.param != null) {
-        _option.param = option.param;
-    }
-    if (option.textAlign != null) {
-        _option.textAlign = option.textAlign;
-    }
-    if (option.isCheckNull != null) {
-        _option.isCheckNull = option.isCheckNull;
-    }
-    if (option.multipleSelect != null && option.multipleSelect == false) {
-        _option.multipleSelect = option.multipleSelect;
-    }
 
     //Id复制
     var nojTableId = _option.tableId.replace("#", "");
