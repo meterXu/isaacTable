@@ -3,7 +3,7 @@
      * 初始化控件iTable
      * @param option 初始化参数
      */
-    $.fn.iTable = function (option) {
+    $.fn.itable = function (option) {
         var _this = this;//保存作用域;
         //设置默认值
         var _option = {
