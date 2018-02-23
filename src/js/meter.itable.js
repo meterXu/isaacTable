@@ -1,6 +1,11 @@
-﻿(function ($) {
+﻿/**
+ * itable表格控件
+ * 作者：Meter
+ * 邮箱：xhgainxq@gmail.com
+ */
+(function ($) {
     /**
-     * 初始化控件iTable
+     * 初始化控件itable
      * @param option 初始化参数
      */
     $.fn.itable = function (option) {
