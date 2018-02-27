@@ -7,12 +7,12 @@
 (function ($) {
     /**
      * 初始化控件itable
-     * @param option 初始化参数
+     * @param options 初始化参数
      */
-    $.fn.itable = function (option) {
+    $.fn.itable = function (options) {
         var _this = this;//保存作用域;
         //设置默认值
-        var _option = {
+        var _options = {
             checkBox: true, //是否显示复选框
             rowNumber: true, //是否显示编号
             isFooter: true, //是否显示底部
@@ -27,66 +27,66 @@
             cellResize: true//是否可以拖拉单元格
         };
         //赋值
-        _option.url = _option.url || option.url;
-        _option.column = _option.column || option.column;
-        _option.toolbar = _option.toolbar || option.toolbar;
-        _option.ajaxType = _option.ajaxType || option.ajaxType;
-        _option.ajaxDataType = _option.ajaxDataType || option.ajaxDataType;
-        _option.localData = _option.localData || option.localData;
-        _option.pageList = _option.pageList || option.pageList;
-        _option.tableHeader = _option.tableHeader || option.tableHeader;
-        _option.ajaxSuccess = _option.ajaxSuccess || option.ajaxSuccess;
-        _option.loadSuccess = _option.loadSuccess || option.loadSuccess;
-        _option.param = _option.param || option.param;
-        _option.textAlign = _option.textAlign || option.textAlign;
-        if (option.checkBox != null && option.checkBox == false) {
-            _option.checkBox = option.checkBox;
+        _options.url = _options.url || options.url;
+        _options.column = _options.column || options.column;
+        _options.toolbar = _options.toolbar || options.toolbar;
+        _options.ajaxType = _options.ajaxType || options.ajaxType;
+        _options.ajaxDataType = _options.ajaxDataType || options.ajaxDataType;
+        _options.localData = _options.localData || options.localData;
+        _options.pageList = _options.pageList || options.pageList;
+        _options.tableHeader = _options.tableHeader || options.tableHeader;
+        _options.ajaxSuccess = _options.ajaxSuccess || options.ajaxSuccess;
+        _options.loadSuccess = _options.loadSuccess || options.loadSuccess;
+        _options.param = _options.param || options.param;
+        _options.textAlign = _options.textAlign || options.textAlign;
+        if (options.checkBox != null && options.checkBox == false) {
+            _options.checkBox = options.checkBox;
         }
-        if (option.rowNumber != null && option.rowNumber == false) {
-            _option.rowNumber = option.rowNumber;
+        if (options.rowNumber != null && options.rowNumber == false) {
+            _options.rowNumber = options.rowNumber;
         }
-        if (option.isFooter != null && option.isFooter == false) {
-            _option.isFooter = option.isFooter;
+        if (options.isFooter != null && options.isFooter == false) {
+            _options.isFooter = options.isFooter;
         }
-        if (option.isPagination != null && option.isPagination == false) {
-            _option.isPagination = option.isPagination;
+        if (options.isPagination != null && options.isPagination == false) {
+            _options.isPagination = options.isPagination;
         }
-        if (option.isCheckNull != null && option.isCheckNull == false) {
-            _option.isCheckNull = option.isCheckNull;
+        if (options.isCheckNull != null && options.isCheckNull == false) {
+            _options.isCheckNull = options.isCheckNull;
         }
-        if (option.multipleSelect != null && option.multipleSelect == false) {
-            _option.multipleSelect = option.multipleSelect;
+        if (options.multipleSelect != null && options.multipleSelect == false) {
+            _options.multipleSelect = options.multipleSelect;
         }
-        inititable(_option);
+        inititable(_options);
     }
 
     //初始化itable
-    function inititable(option) {
+    function inititable(options) {
         //Id复制
-        var nojTableId = _option.tableId.replace("#", "");
-        _option.foolerId = nojTableId + "_datafooter";
-        _option.paginationId = nojTableId + "_dataPage";
-        _option.selectionId = nojTableId + "_selection";
-        _option.pageSelect = nojTableId + "_pageSelect";
-        _option.baseToolbar = nojTableId + "_baseToolbar";
+        var nojTableId = options.tableId.replace("#", "");
+        options.foolerId = nojTableId + "_datafooter";
+        options.paginationId = nojTableId + "_dataPage";
+        options.selectionId = nojTableId + "_selection";
+        options.pageSelect = nojTableId + "_pageSelect";
+        options.baseToolbar = nojTableId + "_baseToolbar";
         //table加上底部
         $("#" + nojTableId + "_base_footer").remove();
-        var selection = "<div id='" + _option.selectionId + "' class='isaac_page_left isaac_selection'></div>";
-        $(_option.tableId).after(" <div id='" + nojTableId + "_base_footer' class='isaac_page'>" +
-            "<div id='" + _option.foolerId + "'></div>" + selection +
+        var selection = "<div id='" + options.selectionId + "' class='isaac_page_left isaac_selection'></div>";
+        $(options.tableId).after(" <div id='" + nojTableId + "_base_footer' class='isaac_page'>" +
+            "<div id='" + options.foolerId + "'></div>" + selection +
             "<div class='isaac_pagination'>" +
-            "<ul id='" + _option.paginationId + "' class='right'></ul>" +
+            "<ul id='" + options.paginationId + "' class='right'></ul>" +
             "</div></div>");
 
         //加载toolbar
-        loadToolbar(_option.toolbar);
+        loadToolbar(options.toolbar);
         loadTableHeader();
 
-        this.Option = _option;
+        this.Option = options;
         //返回选中的值集合
         this.getSelection = function () {
             var selectValue = new Array();
-            $(_option.tableId).find("input[name='isaac_chk']").each(function (i, n) {
+            $(options.tableId).find("input[name='isaac_chk']").each(function (i, n) {
                 if (n.checked) {
                     selectValue.push(n.value);
                 }
@@ -95,59 +95,59 @@
         };
         //加载数据，生成表，或者其他神马
         this.loadData = function () {
-            if (_option.tdata != null) {
-                $(_option.tableId).empty();
-                $("#" + _option.foolerId).empty();
-                $("#" + _option.paginationId).empty();
-                $("#" + _option.selectionId).empty();
-                if (_option.ajaxSuccess) {
-                    _option.ajaxSuccess(_option.tdata);
+            if (options.tdata != null) {
+                $(options.tableId).empty();
+                $("#" + options.foolerId).empty();
+                $("#" + options.paginationId).empty();
+                $("#" + options.selectionId).empty();
+                if (options.ajaxSuccess) {
+                    options.ajaxSuccess(options.tdata);
                 } else {
-                    priveTable(_option.tdata);
+                    priveTable(options.tdata);
                 }
 
                 loadPageList();
-                if (_option.isFooter) {
-                    loadFooter(_option.tdata);
+                if (options.isFooter) {
+                    loadFooter(options.tdata);
                 }
-                if (_option.isPagination) {
-                    loadPagination(_option.tdata);
+                if (options.isPagination) {
+                    loadPagination(options.tdata);
                 }
-                if (_option.loadSuccess) {
-                    _option.loadSuccess(data);
+                if (options.loadSuccess) {
+                    options.loadSuccess(data);
                 }
             } else {
                 $.ajax({
-                    url: _option.url,
-                    type: _option.ajaxType,
-                    dataType: _option.ajaxDataType,
-                    data: _option.param,
+                    url: options.url,
+                    type: options.ajaxType,
+                    dataType: options.ajaxDataType,
+                    data: options.param,
                     beforeSend: function () {
                         //给table加上样式
-                        $(_option.tableId).addClass("isaac_table").attr("style", "width: 100%");
-                        $(_option.tableId).html("<tr><td><div class='loadDiv'><div class='loading'></div> 正在加载......</div></td></tr>");
+                        $(options.tableId).addClass("isaac_table").attr("style", "width: 100%");
+                        $(options.tableId).html("<tr><td><div class='loadDiv'><div class='loading'></div> 正在加载......</div></td></tr>");
                     },
                     success: function (data) {
-                        _option.data = data;
-                        $(_option.tableId).empty();
-                        $("#" + _option.foolerId).empty();
-                        $("#" + _option.paginationId).empty();
-                        $("#" + _option.selectionId).empty();
-                        if (_option.ajaxSuccess) {
-                            _option.ajaxSuccess(data);
+                        options.data = data;
+                        $(options.tableId).empty();
+                        $("#" + options.foolerId).empty();
+                        $("#" + options.paginationId).empty();
+                        $("#" + options.selectionId).empty();
+                        if (options.ajaxSuccess) {
+                            options.ajaxSuccess(data);
                         } else {
                             priveTable(data);
                         }
                         loadPageList();
 
-                        if (_option.isFooter) {
+                        if (options.isFooter) {
                             loadFooter(data);
                         }
-                        if (_option.isPagination) {
+                        if (options.isPagination) {
                             loadPagination(data);
                         }
-                        if (_option.loadSuccess) {
-                            _option.loadSuccess(data);
+                        if (options.loadSuccess) {
+                            options.loadSuccess(data);
                         }
                     }
                 });
@@ -160,57 +160,57 @@
         };
         //加载第一页数据
         this.LoadFirst = function () {
-            _option.param.Page = 1;
+            options.param.Page = 1;
             this.loadData();
         };
         //加载某一页数据
         this.LoadDataPage = function (page) {
-            _option.param.Page = page;
+            options.param.Page = page;
             this.loadData();
         };
         //生成表
         function priveTable(data) {
             var th = "";
             var tr = "";
-            if (_option.rowNumber) {//是否显示编号
+            if (options.rowNumber) {//是否显示编号
                 th += "<th class='isaac_number'></th>";
             }
-            if (_option.checkBox) {//是否显示复选框
+            if (options.checkBox) {//是否显示复选框
                 th += "<th style='width:15px;'><input type='checkbox' class='isaac_chk' id='" + nojTableId + "_chkAll' onclick='ChkAll(this)'/></th>";//添加单选框
             }
-            for (var i = 1; i < _option.column[0].length; i++) {
-                if (_option.column[0][i].width)
-                    th += "<th class='isaac_table_th' style='width:" + _option.column[0][i].width + "'><div class='isaac_table_cell'>" + _option.column[0][i].title + "</div></th>";//创建标题
+            for (var i = 1; i < options.column[0].length; i++) {
+                if (options.column[0][i].width)
+                    th += "<th class='isaac_table_th' style='width:" + options.column[0][i].width + "'><div class='isaac_table_cell'>" + options.column[0][i].title + "</div></th>";//创建标题
                 else {
-                    th += "<th class='isaac_table_th' ><div class='isaac_table_cell'>" + _option.column[0][i].title + "</div></th>";//创建标题
+                    th += "<th class='isaac_table_th' ><div class='isaac_table_cell'>" + options.column[0][i].title + "</div></th>";//创建标题
                 }
             }
             for (var j = 0; j < data.Rows.length; j++) {
                 var td = "";
-                var numbert = parseInt((_option.param.Page - 1) * _option.param.RP + j);//数据编号,从0开始
-                if (_option.rowNumber)
+                var numbert = parseInt((options.param.Page - 1) * options.param.RP + j);//数据编号,从0开始
+                if (options.rowNumber)
                     td += "<td class='isaac_td_number'>" + (numbert + 1) + "</td>";
-                if (_option.checkBox)
-                    td += "<td class='t_one'><input type='checkbox' class='isaac_chk' id=" + nojTableId + "_chk_" + j + " name='isaac_chk' value=\"" + data.Rows[j][_option.column[0][0].field] + "\"/></td>";
-                for (var k = 1; k < _option.column[0].length; k++) {
-                    if (_option.column[0][k].formatter)
-                        td += "<td>" + _option.column[0][k].formatter(data.Rows[j][_option.column[0][k].field], numbert, data.Rows[j]) + "</td>";
+                if (options.checkBox)
+                    td += "<td class='t_one'><input type='checkbox' class='isaac_chk' id=" + nojTableId + "_chk_" + j + " name='isaac_chk' value=\"" + data.Rows[j][options.column[0][0].field] + "\"/></td>";
+                for (var k = 1; k < options.column[0].length; k++) {
+                    if (options.column[0][k].formatter)
+                        td += "<td>" + options.column[0][k].formatter(data.Rows[j][options.column[0][k].field], numbert, data.Rows[j]) + "</td>";
                     else {
-                        if (_option.isCheckNull) {
-                            td += "<td>" + CheckNull(data.Rows[j][_option.column[0][k].field]) + "</td>";
+                        if (options.isCheckNull) {
+                            td += "<td>" + CheckNull(data.Rows[j][options.column[0][k].field]) + "</td>";
                         } else {
-                            td += "<td>" + data.Rows[j][_option.column[0][k].field] + "</td>";
+                            td += "<td>" + data.Rows[j][options.column[0][k].field] + "</td>";
                         }
                     }
                 }
                 tr += "<tr>" + td + "</tr>";
             }
-            $(_option.tableId).append("<thead><tr>" + th + "</tr></thead>" + tr);
-            switch (_option.textAlign) {
+            $(options.tableId).append("<thead><tr>" + th + "</tr></thead>" + tr);
+            switch (options.textAlign) {
                 case "center":
-                    $(_option.tableId + " th:not(.t_one)," + _option.tableId + " td:not(.t_one)").css("text-align", 'center'); break;
+                    $(options.tableId + " th:not(.t_one)," + options.tableId + " td:not(.t_one)").css("text-align", 'center'); break;
                 default:
-                    $(_option.tableId + " th:not(.t_one)," + _option.tableId + " td:not(.t_one)").css("text-align", 'left');
+                    $(options.tableId + " th:not(.t_one)," + options.tableId + " td:not(.t_one)").css("text-align", 'left');
             }
             selectOnCheck();
             cellResize();
@@ -218,31 +218,31 @@
         //加载底部信息栏
         function loadFooter(data) {
             //加载左下角
-            $("#" + _option.foolerId).addClass("isaac_page_left");
-            var one = (data.Total == 0) ? 0 : (_option.param.Page - 1) * _option.param.RP + 1;
-            var two = _option.param.Page * _option.param.RP <= data.Total ? _option.param.Page * _option.param.RP : data.Total;
-            $("#" + _option.foolerId).append("<div class='page-txt'>第" + one + "-" + two + "条  /  共" + data.Total + "条数据</div>");
+            $("#" + options.foolerId).addClass("isaac_page_left");
+            var one = (data.Total == 0) ? 0 : (options.param.Page - 1) * options.param.RP + 1;
+            var two = options.param.Page * options.param.RP <= data.Total ? options.param.Page * options.param.RP : data.Total;
+            $("#" + options.foolerId).append("<div class='page-txt'>第" + one + "-" + two + "条  /  共" + data.Total + "条数据</div>");
         };
 
         //加载每页显示页数
         function loadPageList() {
-            if (_option.pageList.length > 0) {
-                var select = "<select id='" + _option.pageSelect + "' class='isaac_select_option'>";
-                for (var i = 0; i < _option.pageList.length; i++) {
-                    select += "<option value='" + _option.pageList[i] + "'>每页" + _option.pageList[i] + "条</option>";
+            if (options.pageList.length > 0) {
+                var select = "<select id='" + options.pageSelect + "' class='isaac_select_option'>";
+                for (var i = 0; i < options.pageList.length; i++) {
+                    select += "<option value='" + options.pageList[i] + "'>每页" + options.pageList[i] + "条</option>";
                 }
                 select += "</select>";
-                $("#" + _option.selectionId).append(select);
-                $("#" + _option.pageSelect).val(_option.param.RP);
+                $("#" + options.selectionId).append(select);
+                $("#" + options.pageSelect).val(options.param.RP);
             }
-            $("#" + _option.selectionId).append("<div class='isaac_refresh' title='刷新'></div>");
+            $("#" + options.selectionId).append("<div class='isaac_refresh' title='刷新'></div>");
 
-            $("#" + _option.selectionId + " .isaac_refresh").click(function () {
+            $("#" + options.selectionId + " .isaac_refresh").click(function () {
                 _this.ReLoad();
             });
-            $("#" + _option.pageSelect).change(function () {
-                _option.param.Page = 1;
-                _option.param.RP = this.value;
+            $("#" + options.pageSelect).change(function () {
+                options.param.Page = 1;
+                options.param.RP = this.value;
                 _this.ReLoad();
             });
         }
@@ -250,13 +250,13 @@
         function loadPagination(data) {
             //加载页数
             var pages = 0;//总页数
-            if (data.Total % _option.param.RP == 0) {//可整除
-                pages = data.Total / _option.param.RP;
+            if (data.Total % options.param.RP == 0) {//可整除
+                pages = data.Total / options.param.RP;
             } else {//不可整除
-                pages = parseInt(data.Total / _option.param.RP) + 1;
+                pages = parseInt(data.Total / options.param.RP) + 1;
             }
             var li = "";
-            if (_option.param.Page > 1) {
+            if (options.param.Page > 1) {
                 li += "<li><a>最前页</a></li><li><a>上一页</a></li>";
             }
             switch (pages) {
@@ -269,16 +269,16 @@
                 case 3:
                     li += "<li><a>" + 1 + "</a></li>" + "<li><a>" + 2 + "</a></li>" + "<li><a>" + 3 + "</a></li>"; break;
                 default:
-                    if (_option.param.Page <= 3) {
-                        for (var n = 1; n <= (_option.param.Page + 3 > pages ? pages : _option.param.Page + 3); n++) {
-                            if (n == _option.param.Page)
+                    if (options.param.Page <= 3) {
+                        for (var n = 1; n <= (options.param.Page + 3 > pages ? pages : options.param.Page + 3); n++) {
+                            if (n == options.param.Page)
                                 li += "<li class='isaac_pagination_active'><a>" + n + "</a></li>";
                             else
                                 li += "<li><a>" + n + "</a></li>";
                         }
                     } else {
-                        for (var m = _option.param.Page - 3; m <= (_option.param.Page + 3 > pages ? pages : _option.param.Page + 3); m++) {
-                            if (m == _option.param.Page)
+                        for (var m = options.param.Page - 3; m <= (options.param.Page + 3 > pages ? pages : options.param.Page + 3); m++) {
+                            if (m == options.param.Page)
                                 li += "<li class='isaac_pagination_active'><a>" + m + "</a></li>";
                             else
                                 li += "<li><a>" + m + "</a></li>";
@@ -287,11 +287,11 @@
             }
 
 
-            if (_option.param.Page < pages) {
+            if (options.param.Page < pages) {
                 li += "<li><a>下一页</a></li><li><a>最末页</a></li>";
             }
-            $("#" + _option.paginationId).append(li);
-            $("#" + _option.paginationId + " li").each(function (l) {
+            $("#" + options.paginationId).append(li);
+            $("#" + options.paginationId + " li").each(function (l) {
                 $(this).css("cursor", "pointer");
                 $(this).click(function () {
                     var gotoPage = 0;
@@ -300,13 +300,13 @@
                             gotoPage = 1;
                             break;
                         case "上一页":
-                            gotoPage = _option.param.Page - 1;
+                            gotoPage = options.param.Page - 1;
                             break;
                         case "最末页":
                             gotoPage = pages;
                             break;
                         case "下一页":
-                            gotoPage = _option.param.Page + 1;
+                            gotoPage = options.param.Page + 1;
                             break;
                         default:
                             gotoPage = parseInt(this.innerHTML.toLowerCase().replace("<a>", "").replace("</a>"));
@@ -315,34 +315,34 @@
 
                 });
             });
-            $("#" + _option.paginationId + " li:first").addClass("isaac_li_first");
-            $("#" + _option.paginationId + " li:last").addClass("isaac_li_last");
-            $("#" + _option.paginationId + " li:contains(" + (_option.param.Page) + ")").addClass("isaac_pagination_active");
+            $("#" + options.paginationId + " li:first").addClass("isaac_li_first");
+            $("#" + options.paginationId + " li:last").addClass("isaac_li_last");
+            $("#" + options.paginationId + " li:contains(" + (options.param.Page) + ")").addClass("isaac_pagination_active");
         };
 
         //加载表头
         function loadTableHeader() {
-            if (_option.tableHeader != null) {
+            if (options.tableHeader != null) {
 
-                $("#" + nojTableId + "_tableHeader").html(_option.tableHeader);
+                $("#" + nojTableId + "_tableHeader").html(options.tableHeader);
             }
 
         }
 
         //加载toolbar
         function loadToolbar(data) {
-            $("#" + _option.baseToolbar).remove();
+            $("#" + options.baseToolbar).remove();
             $("#" + nojTableId + "_tableHeader").remove();
             if (data != null && data.length >= 1) {
-                var toobar = "<div id='" + _option.baseToolbar + "' class='isaac_operate'>";
+                var toobar = "<div id='" + options.baseToolbar + "' class='isaac_operate'>";
                 for (var i = 0; i < data.length; i++) {
-                    toobar += " <a href='javascript:void(0);' id='" + _option.tableId + "_" + data[i].id + "' ><i class='icon " + data[i].icon + "'></i>" + data[i].text + "</a>";
+                    toobar += " <a href='javascript:void(0);' id='" + options.tableId + "_" + data[i].id + "' ><i class='icon " + data[i].icon + "'></i>" + data[i].text + "</a>";
                 }
                 toobar += "</div><div id=" + nojTableId + "_tableHeader></div>";
-                $(_option.tableId).before(toobar);
+                $(options.tableId).before(toobar);
 
                 $(data).each(function (j, n) {
-                    $("a[id='" + _option.tableId + "_" + n.id + "']").click(function () {
+                    $("a[id='" + options.tableId + "_" + n.id + "']").click(function () {
                         n.handler();
                     });
                 });
@@ -351,10 +351,10 @@
 
         //选中数据同时选中复选框
         function selectOnCheck() {
-            if (_option.selectOnCheck) {
-                if (_option.checkBox) {
-                    if (_option.multipleSelect) {
-                        $(_option.tableId + " tr").not($(_option.tableId + " tr:first")).each(function (i, n) {
+            if (options.selectOnCheck) {
+                if (options.checkBox) {
+                    if (options.multipleSelect) {
+                        $(options.tableId + " tr").not($(options.tableId + " tr:first")).each(function (i, n) {
                             $(n).find("td:not(.t_one)").click(function () {
                                 var chk = $("#" + nojTableId + "_chk_" + i)[0];
                                 if (chk.checked) {
@@ -366,7 +366,7 @@
                             });
                         });
                     } else {
-                        $(_option.tableId + " tr").not($(_option.tableId + " tr:first")).each(function (i, n) {
+                        $(options.tableId + " tr").not($(options.tableId + " tr:first")).each(function (i, n) {
                             $(n).find("td:not(.t_one)").click(function () {
                                 var chk = $("#" + nojTableId + "_chk_" + i)[0];
                                 if (chk.checked) {
@@ -374,7 +374,7 @@
                                 } else {
                                     chk.checked = true;
                                 }
-                                $(_option.tableId + " tr").not($(_option.tableId + " tr:first")).each(function (j, k) {
+                                $(options.tableId + " tr").not($(options.tableId + " tr:first")).each(function (j, k) {
                                     if (j != i) {
                                         var chk2 = $("#" + nojTableId + "_chk_" + j)[0];
                                         chk2.checked = false;
@@ -392,13 +392,13 @@
 
         //拖拉列宽
         function cellResize() {
-            if (_option.cellResize) {
+            if (options.cellResize) {
                 var oldWidth = 0;
                 var oldPointX = 0;
                 var tdPaddingLeft = 0;
                 var tdBorderLeft = 0;
                 var isResize = false;
-                $(_option.tableId + " .isaac_table_cell").mousemove(function (ev) {//单元格鼠标移动
+                $(options.tableId + " .isaac_table_cell").mousemove(function (ev) {//单元格鼠标移动
                     var e = ev;
                     oldWidth = this.offsetWidth;
                     if ((computePx(this) + oldWidth) - e.clientX <= 3 && (computePx(this) + oldWidth) > e.clientX) {
@@ -414,13 +414,13 @@
 
                 });
 
-                $(_option.tableId + " .isaac_table_cell").mousedown(function (ev) {//单元格鼠标按下
+                $(options.tableId + " .isaac_table_cell").mousedown(function (ev) {//单元格鼠标按下
                     if (isResize) {
                         var ft = this;
-                        var width = $(_option.tableId)[0].offsetWidth;
-                        var height = $(_option.tableId)[0].offsetHeight;
-                        var top = computePy($(_option.tableId)[0]);
-                        var left = computePx($(_option.tableId)[0]);
+                        var width = $(options.tableId)[0].offsetWidth;
+                        var height = $(options.tableId)[0].offsetHeight;
+                        var top = computePy($(options.tableId)[0]);
+                        var left = computePx($(options.tableId)[0]);
                         var div = "<div class='isaac_layout' style='width:" + width + "px;height:" + height + "px;top:" + top + "px;left:" + left + "px'>" +
                             "<div class='isaac_verticalLine' style='left:" + (oldPointX - left + 5) + "px'><div class='isaac_lineContent'>左右拖动</div></div></div>";
                         $(this).after(div);
@@ -451,7 +451,7 @@
                             if (number < 30)
                                 number = 29;
                             $(ft).parent().animate({ width: (number) }, 500);
-                            $(_option.tableId).unbind("mousemove");
+                            $(options.tableId).unbind("mousemove");
 
                             $(".isaac_layout").remove();
                         });
@@ -460,7 +460,7 @@
 
 
                 });
-                $(_option.tableId + " .datagrid-cell").mouseup(function (ev) {//单元格鼠标弹起
+                $(options.tableId + " .datagrid-cell").mouseup(function (ev) {//单元格鼠标弹起
                     isResize = false;
                 });
             }
