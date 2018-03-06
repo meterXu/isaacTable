@@ -9,7 +9,16 @@
     <script type="text/javascript" src="../src/js/meter.itable.js"></script>
     <script>
         var options={
-
+            localData:{
+                rows:[
+                    {id:"1",name:"aaa"},
+                    {id:"2",name:"bbb"},
+                    {id:"3",name:"ccc"}
+                ]
+            },
+            columns:[[                {title:"ID",field:"id"},
+                {title:"名称",field:"name"}]
+            ]
         };
         $(function(){
             $("#demo").itable(options);
