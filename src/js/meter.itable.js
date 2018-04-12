@@ -19,7 +19,8 @@
             isPagination: true, //是否显示分页
             ajaxType: "post",//ajax请求类型
             ajaxDataType: "json",//返回数据类型
-            param: new DataGridParam(1, 5), //默认分页对象
+            pageList: [5, 10, 15, 20],//显示条数下拉框
+            param: new dataGridParam(1, 5), //默认分页对象
             textAlign: 'left', //默认文字水平排列方式
             isCheckNull: true, //检查空值
             selectOnCheck: true, //选中数据同时选中复选框
@@ -57,36 +58,38 @@
         if (options.multipleSelect != null && options.multipleSelect == false) {
             _options.multipleSelect = options.multipleSelect;
         }
-        this.each(function(i,d){
-            inititable(i,d,_options);
+        this.each(function (i, d) {
+            inititable(i, d, _options);
         });
 
     }
 
     //初始化itable
-    function inititable(i,selector,options) {
-        var tableKey="itable_",
-            footerKey="footer_",
-            paginationKey="dataPage_",
-            selectionKey="selection_",
-            pageSelectKey="pageSelect_",
-            baseToolbarKey="baseToolbar_";
+    function inititable(i, selector, options) {
+        var tableKey = "itable_",
+            footerKey = "footer_",
+            paginationKey = "dataPage_",
+            selectionKey = "selection_",
+            pageSelectKey = "pageSelect_",
+            baseToolbarKey = "baseToolbar_";
         //Id复制
-        var nojTableId = tableKey+i;
-        options.foolerId = tableKey+footerKey+i;
-        options.paginationId = tableKey+paginationKey+i;
-        options.selectionId = tableKey+selectionKey+i;
-        options.pageSelect = tableKey+pageSelectKey+i;
-        options.baseToolbar = tableKey+baseToolbarKey+i;
+        var nojTableId = tableKey + i;
+        options.foolerId = tableKey + footerKey + i;
+        options.paginationId = tableKey + paginationKey + i;
+        options.selectionId = tableKey + selectionKey + i;
+        options.pageSelect = tableKey + pageSelectKey + i;
+        options.baseToolbar = tableKey + baseToolbarKey + i;
         //table加上底部
         $("#" + nojTableId + "_base_footer").remove();
         var selection = "<div id='" + options.selectionId + "' class='isaac_page_left isaac_selection'></div>";
-        $(selector).after(" <div id='" + nojTableId + "_base_footer' class='isaac_page'>" +
+        $(selector).after("<div id='" + nojTableId + "_base_footer' class='isaac_page'>" +
             "<div id='" + options.foolerId + "'></div>" + selection +
             "<div class='isaac_pagination'>" +
             "<ul id='" + options.paginationId + "' class='right'></ul>" +
             "</div></div>");
-
+        if ($(selector).width()>0) {
+            $("#" + nojTableId + "_base_footer").outerWidth($(selector).width());
+        }
         //加载toolbar
         loadToolbar(options.toolbar);
         loadTableHeader();
@@ -169,12 +172,12 @@
         };
         //加载第一页数据
         this.LoadFirst = function () {
-            options.param.Page = 1;
+            options.param.page = 1;
             this.loadData();
         };
         //加载某一页数据
         this.LoadDataPage = function (page) {
-            options.param.Page = page;
+            options.param.page = page;
             this.loadData();
         };
         //生成表
@@ -196,7 +199,7 @@
             }
             for (var j = 0; j < data.rows.length; j++) {
                 var td = "";
-                var numbert = parseInt((options.param.Page - 1) * options.param.RP + j);//数据编号,从0开始
+                var numbert = parseInt((options.param.page - 1) * options.param.rp + j);//数据编号,从0开始
                 if (options.rowNumber)
                     td += "<td class='isaac_td_number'>" + (numbert + 1) + "</td>";
                 if (options.checkBox)
@@ -214,12 +217,14 @@
                 }
                 tr += "<tr>" + td + "</tr>";
             }
-            $(selector).append("<thead><tr>" + th + "</tr></thead>" + tr);
+            $(selector).addClass("isaac_table").append("<thead><tr>" + th + "</tr></thead>" + tr);
             switch (options.textAlign) {
                 case "center":
-                    $(selector + " th:not(.t_one)," + selector + " td:not(.t_one)").css("text-align", 'center'); break;
+                    $(selector).find("th:not(.t_one),td:not(.t_one)").css("text-align", 'center');
+                    break;
                 default:
-                    $(selector + " th:not(.t_one)," + selector + " td:not(.t_one)").css("text-align", 'left');
+                    $(selector).find("th:not(.t_one),td:not(.t_one)").css("text-align", 'left');
+                    break;
             }
             selectOnCheck();
             cellResize();
@@ -228,30 +233,30 @@
         function loadFooter(data) {
             //加载左下角
             $("#" + options.foolerId).addClass("isaac_page_left");
-            var one = (data.Total == 0) ? 0 : (options.param.Page - 1) * options.param.RP + 1;
-            var two = options.param.Page * options.param.RP <= data.Total ? options.param.Page * options.param.RP : data.Total;
-            $("#" + options.foolerId).append("<div class='page-txt'>第" + one + "-" + two + "条  /  共" + data.Total + "条数据</div>");
+            var one = (data.total == 0) ? 0 : (options.param.page - 1) * options.param.rp + 1;
+            var two = options.param.page * options.param.rp <= data.total ? options.param.page * options.param.rp : data.total;
+            $("#" + options.foolerId).append("<div class='page-txt'>第" + one + "-" + two + "条  /  共" + data.total + "条数据</div>");
         };
 
         //加载每页显示页数
         function loadPageList() {
-            if (options.pageList.length > 0) {
+            if (options.pageList && options.pageList.length > 0) {
                 var select = "<select id='" + options.pageSelect + "' class='isaac_select_option'>";
                 for (var i = 0; i < options.pageList.length; i++) {
                     select += "<option value='" + options.pageList[i] + "'>每页" + options.pageList[i] + "条</option>";
                 }
                 select += "</select>";
-                $("#" + options.selectionId).append(select);
-                $("#" + options.pageSelect).val(options.param.RP);
+                $("#" + nojTableId + "_base_footer").append(select);
+                $("#" + options.pageSelect).val(options.param.rp);
             }
-            $("#" + options.selectionId).append("<div class='isaac_refresh' title='刷新'></div>");
+            $("#" + nojTableId + "_base_footer").append("<div class='isaac_refresh' title='刷新'></div>");
 
-            $("#" + options.selectionId + " .isaac_refresh").click(function () {
-                _this.ReLoad();
-            });
+            //$("#" + options.foolerId).find(".isaac_refresh").click(function () {
+            //     _this.ReLoad();
+            // });
             $("#" + options.pageSelect).change(function () {
-                options.param.Page = 1;
-                options.param.RP = this.value;
+                options.param.page = 1;
+                options.param.rp = this.value;
                 _this.ReLoad();
             });
         }
@@ -259,13 +264,13 @@
         function loadPagination(data) {
             //加载页数
             var pages = 0;//总页数
-            if (data.Total % options.param.RP == 0) {//可整除
-                pages = data.Total / options.param.RP;
+            if (data.total % options.param.rp == 0) {//可整除
+                pages = data.total / options.param.rp;
             } else {//不可整除
-                pages = parseInt(data.Total / options.param.RP) + 1;
+                pages = parseInt(data.total / options.param.rp) + 1;
             }
             var li = "";
-            if (options.param.Page > 1) {
+            if (options.param.page > 1) {
                 li += "<li><a>最前页</a></li><li><a>上一页</a></li>";
             }
             switch (pages) {
@@ -278,16 +283,16 @@
                 case 3:
                     li += "<li><a>" + 1 + "</a></li>" + "<li><a>" + 2 + "</a></li>" + "<li><a>" + 3 + "</a></li>"; break;
                 default:
-                    if (options.param.Page <= 3) {
-                        for (var n = 1; n <= (options.param.Page + 3 > pages ? pages : options.param.Page + 3); n++) {
-                            if (n == options.param.Page)
+                    if (options.param.page <= 3) {
+                        for (var n = 1; n <= (options.param.page + 3 > pages ? pages : options.param.page + 3); n++) {
+                            if (n == options.param.page)
                                 li += "<li class='isaac_pagination_active'><a>" + n + "</a></li>";
                             else
                                 li += "<li><a>" + n + "</a></li>";
                         }
                     } else {
-                        for (var m = options.param.Page - 3; m <= (options.param.Page + 3 > pages ? pages : options.param.Page + 3); m++) {
-                            if (m == options.param.Page)
+                        for (var m = options.param.page - 3; m <= (options.param.page + 3 > pages ? pages : options.param.page + 3); m++) {
+                            if (m == options.param.page)
                                 li += "<li class='isaac_pagination_active'><a>" + m + "</a></li>";
                             else
                                 li += "<li><a>" + m + "</a></li>";
@@ -296,7 +301,7 @@
             }
 
 
-            if (options.param.Page < pages) {
+            if (options.param.page < pages) {
                 li += "<li><a>下一页</a></li><li><a>最末页</a></li>";
             }
             $("#" + options.paginationId).append(li);
@@ -309,13 +314,13 @@
                             gotoPage = 1;
                             break;
                         case "上一页":
-                            gotoPage = options.param.Page - 1;
+                            gotoPage = options.param.page - 1;
                             break;
                         case "最末页":
                             gotoPage = pages;
                             break;
                         case "下一页":
-                            gotoPage = options.param.Page + 1;
+                            gotoPage = options.param.page + 1;
                             break;
                         default:
                             gotoPage = parseInt(this.innerHTML.toLowerCase().replace("<a>", "").replace("</a>"));
@@ -326,7 +331,7 @@
             });
             $("#" + options.paginationId + " li:first").addClass("isaac_li_first");
             $("#" + options.paginationId + " li:last").addClass("isaac_li_last");
-            $("#" + options.paginationId + " li:contains(" + (options.param.Page) + ")").addClass("isaac_pagination_active");
+            $("#" + options.paginationId + " li:contains(" + (options.param.page) + ")").addClass("isaac_pagination_active");
         };
 
         //加载表头
@@ -363,7 +368,7 @@
             if (options.selectOnCheck) {
                 if (options.checkBox) {
                     if (options.multipleSelect) {
-                        $(selector + " tr").not($(selector + " tr:first")).each(function (i, n) {
+                        $(selector).children("tr").not($(selector).children("tr:first")).each(function (i, n) {
                             $(n).find("td:not(.t_one)").click(function () {
                                 var chk = $("#" + nojTableId + "_chk_" + i)[0];
                                 if (chk.checked) {
@@ -375,7 +380,7 @@
                             });
                         });
                     } else {
-                        $(selector + " tr").not($(selector + " tr:first")).each(function (i, n) {
+                        $(selector).children("tr").not($(selector).children("tr:first")).each(function (i, n) {
                             $(n).find("td:not(.t_one)").click(function () {
                                 var chk = $("#" + nojTableId + "_chk_" + i)[0];
                                 if (chk.checked) {
@@ -383,7 +388,7 @@
                                 } else {
                                     chk.checked = true;
                                 }
-                                $(selector + " tr").not($(selector + " tr:first")).each(function (j, k) {
+                                $(selector).children("tr").not($(selector).children("tr:first")).each(function (j, k) {
                                     if (j != i) {
                                         var chk2 = $("#" + nojTableId + "_chk_" + j)[0];
                                         chk2.checked = false;
@@ -407,7 +412,7 @@
                 var tdPaddingLeft = 0;
                 var tdBorderLeft = 0;
                 var isResize = false;
-                $(selector + " .isaac_table_cell").mousemove(function (ev) {//单元格鼠标移动
+                $(selector).find(".isaac_table_cell").mousemove(function (ev) {//单元格鼠标移动
                     var e = ev;
                     oldWidth = this.offsetWidth;
                     if ((computePx(this) + oldWidth) - e.clientX <= 3 && (computePx(this) + oldWidth) > e.clientX) {
@@ -422,8 +427,7 @@
                     }
 
                 });
-
-                $(selector + " .isaac_table_cell").mousedown(function (ev) {//单元格鼠标按下
+                $(selector).find(".isaac_table_cell").mousedown(function (ev) {//单元格鼠标按下
                     if (isResize) {
                         var ft = this;
                         var width = $(selector)[0].offsetWidth;
@@ -469,7 +473,7 @@
 
 
                 });
-                $(selector + " .datagrid-cell").mouseup(function (ev) {//单元格鼠标弹起
+                $(selector).find(".datagrid-cell").mouseup(function (ev) {//单元格鼠标弹起
                     isResize = false;
                 });
             }
@@ -503,10 +507,10 @@
         return x;
     }
 
-    function DataGridParam(page, rp) {
-        this.Query = null;
-        this.Page = page;
-        this.RP = rp;
+    function dataGridParam(page, rp) {
+        this.query = null;
+        this.page = page;
+        this.rp = rp;
     }
     //全选函数
     function ChkAll(dmo) {

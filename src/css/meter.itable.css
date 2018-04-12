@@ -32,6 +32,7 @@
         height: 14px;
         background-color: #fff;
         margin-right: 12px;
+        cursor: pointer;
     }
 
     .isaac_table .isaac_number {
@@ -46,6 +47,7 @@
 
         .isaac_table tbody tr:hover td {
             background-color: #d9edf7;
+            cursor: pointer;
         }
 
 /*toolbar*/
@@ -112,8 +114,8 @@
 .isaac_refresh {
     width: 20px;
     height: 20px;
-    background: url('view_refresh.png') no-repeat center;
-    float: right;
+    background: url('../imgs/view_refresh.png') no-repeat center;
+    float: left;
     margin-top: 8px;
     margin-left: 8px;
     -ms-border-radius: 4px;
@@ -129,7 +131,7 @@
 .loading{
     width: 20px;
     height: 20px;
-    background: url('loading.gif') no-repeat center;
+    background: url('../imgs/loading.gif') no-repeat center;
     display: inline-block;
     margin-right: 2px;
     position: relative;
