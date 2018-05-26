@@ -33,7 +33,7 @@
         _options.toolbar = _options.toolbar || options.toolbar;
         _options.ajaxType = _options.ajaxType || options.ajaxType;
         _options.ajaxDataType = _options.ajaxDataType || options.ajaxDataType;
-        _options.localData = _options.localData || options.localData;
+        _options.data = _options.data || options.data;
         _options.pageList = _options.pageList || options.pageList;
         _options.tableHeader = _options.tableHeader || options.tableHeader;
         _options.ajaxSuccess = _options.ajaxSuccess || options.ajaxSuccess;
@@ -107,26 +107,26 @@
         };
         //加载数据，生成表，或者其他神马
         function loadData() {
-            if (options.localData != null) {
+            if (options.data != null) {
                 $(selector).empty();
                 $("#" + options.foolerId).empty();
                 $("#" + options.paginationId).empty();
                 $("#" + options.selectionId).empty();
                 if (options.ajaxSuccess) {
-                    options.ajaxSuccess(options.localData);
+                    options.ajaxSuccess(options.data);
                 } else {
-                    priveTable(options.localData);
+                    priveTable(options.data);
                 }
 
                 loadPageList();
                 if (options.isFooter) {
-                    loadFooter(options.localData);
+                    loadFooter(options.data);
                 }
                 if (options.isPagination) {
-                    loadPagination(options.localData);
+                    loadPagination(options.data);
                 }
                 if (options.loadSuccess) {
-                    options.loadSuccess(data);
+                    options.loadSuccess(options.data);
                 }
             } else {
                 $.ajax({
