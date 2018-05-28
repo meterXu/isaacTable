@@ -28,18 +28,18 @@
             cellResize: true//是否可以拖拉单元格
         };
         //赋值
-        _options.url = _options.url || options.url;
-        _options.columns = _options.columns || options.columns;
-        _options.toolbar = _options.toolbar || options.toolbar;
-        _options.ajaxType = _options.ajaxType || options.ajaxType;
-        _options.ajaxDataType = _options.ajaxDataType || options.ajaxDataType;
-        _options.data = _options.data || options.data;
-        _options.pageList = _options.pageList || options.pageList;
-        _options.tableHeader = _options.tableHeader || options.tableHeader;
-        _options.ajaxSuccess = _options.ajaxSuccess || options.ajaxSuccess;
-        _options.loadSuccess = _options.loadSuccess || options.loadSuccess;
-        _options.param = _options.param || options.param;
-        _options.textAlign = _options.textAlign || options.textAlign;
+        _options.url = options.url||_options.url;
+        _options.columns = options.columns||_options.columns;
+        _options.toolbar = options.toolbar||_options.toolbar;
+        _options.type = options.type||_options.type;
+        _options.dataType = options.dataType||_options.dataType;
+        _options.data = options.data||_options.data;
+        _options.pageList = options.pageList||_options.pageList;
+        _options.tableHeader = options.tableHeader||_options.tableHeader;
+        _options.ajaxSuccess = options.ajaxSuccess||_options.ajaxSuccess;
+        _options.loadSuccess = options.loadSuccess||_options.loadSuccess;
+        _options.param = options.param||_options.param;
+        _options.textAlign = options.textAlign||_options.textAlign;
         if (options.checkBox != null && options.checkBox == false) {
             _options.checkBox = options.checkBox;
         }
@@ -143,10 +143,11 @@
                         options.loadSuccess(options.data);
                     }
                 } else {
+                    debugger;
                     $.ajax({
                         url: options.url,
                         type: options.ajaxType,
-                        dataType: options.ajaxDataType,
+                        dataType: options.dataType,
                         data: options.param,
                         beforeSend: function () {
                             //给table加上样式

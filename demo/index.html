@@ -10,18 +10,13 @@
     <script>
         var options={
             multipleSelect:true,
-            data:{
-                rows:[
-                    {id:"1",name:"aaa",sex:1},
-                    {id:"2",name:"bbb",sex:2},
-                    {id:"3",name:"ccc",sex:1}
-                ],
-                total:3
-            },
+            url:"http://192.168.12.94/yyjk/AlarmConfig/GetList2",
+            param:{page:1,rp:10,rows:10},
+            dataType:"jsonp",
             columns:[[                
-                {title:"ID",field:"id"},
-                {title:"名称",field:"name"},
-                {title:"性别",field:"sex"}
+                {title:"OID",field:"OID"},
+                {title:"RuleName",field:"RuleName"},
+                {title:"RuleValue",field:"RuleValue"}
             ]]
         };
         $(function(){
