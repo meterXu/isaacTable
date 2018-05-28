@@ -4,11 +4,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>tableDemo</title>
-    <link href="../src/css/meter.itable.css" rel="stylesheet" />
+    <link href="../src/css/isaac.table.css" rel="stylesheet" />
     <script type="text/javascript" src="../src/js/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="../src/js/meter.itable.js"></script>
+    <script type="text/javascript" src="../src/js/isaac.table.js"></script>
     <script>
         var options={
+            multipleSelect:true,
             data:{
                 rows:[
                     {id:"1",name:"aaa",sex:1},
@@ -24,7 +25,7 @@
             ]]
         };
         $(function(){
-            $("#demo").itable(options);
+            $("#demo").isaacTable(options);
         })
     </script>
 </head>

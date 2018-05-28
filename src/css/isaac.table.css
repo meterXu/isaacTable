@@ -84,6 +84,9 @@
     color: #949495;
     line-height: 36px;
 }
+.isaac_page_right{
+    float: right;
+}
 
 .isaac_selection {
     margin-left: 8px;
@@ -94,15 +97,14 @@
     min-width: 125px;
 }
 
-.isaac_select_option {
-    float: left;
+.isaac_selection_select {
     position: relative;
     top: -2px;
-    min-width: 90px;
+    min-width: 115px;
     vertical-align: middle;
     padding: 4px;
-    margin: 4px 0 0 5px;
-    height: 30px;
+    margin: 1px 0 0 5px;
+    height: 26px;
     font-size: 13px;
     display: inline-block;
     color: #808080;
@@ -163,7 +165,6 @@
             display: inline;
             float: left;
             list-style: none;
-            cursor: pointer;
         }
 
             .isaac_pagination ul li a {
@@ -175,6 +176,7 @@
                 border-left: none;
                 background-color: #fff;
                 color: #337ab7;
+                cursor: pointer;
             }
             .isaac_pagination ul li.isaac_li_first a {
                 border-left: 1px solid #ddd;
