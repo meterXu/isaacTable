@@ -10,13 +10,17 @@
     <script>
         var options={
             multipleSelect:true,
-            url:"http://192.168.12.94/yyjk/AlarmConfig/GetList2",
-            param:{page:1,rp:10,rows:10},
+            url:"http://192.168.12.94:5000/api/table/getData",
+            param:{page:1,rp:10},
+            type:"get",
             dataType:"jsonp",
             columns:[[                
-                {title:"OID",field:"OID"},
-                {title:"RuleName",field:"RuleName"},
-                {title:"RuleValue",field:"RuleValue"}
+                {title:"序号",field:"Id"},
+                {title:"名称",field:"Name"},
+                {title:"Key",field:"Function"},
+                {title:"创建时间",field:"CreateTime"},
+                {title:"排序号",field:"Sort"},
+                {title:"状态",field:"Status"}
             ]]
         };
         $(function(){

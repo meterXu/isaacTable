@@ -17,7 +17,7 @@
             rowNumber: true, //是否显示编号
             isFooter: true, //是否显示底部
             isPagination: true, //是否显示分页
-            ajaxType: "post",//ajax请求类型
+            type: "post",//ajax请求类型
             ajaxDataType: "json",//返回数据类型
             pageList: [5, 10, 15, 20],//显示条数下拉框
             param: { page: 1, rp: 5 }, //默认分页对象
@@ -143,10 +143,9 @@
                         options.loadSuccess(options.data);
                     }
                 } else {
-                    debugger;
                     $.ajax({
                         url: options.url,
-                        type: options.ajaxType,
+                        type: options.type,
                         dataType: options.dataType,
                         data: options.param,
                         beforeSend: function () {
