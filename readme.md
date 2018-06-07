@@ -8,7 +8,7 @@ issacTable是一个web版表格控件，可以嵌入你的任何页面，动态�
 
 ![issacTable](http://app.isaacxu.com:9091/table/Images/table.jpg)
 
-## 如何安装
+## 安装
 1.  从github上下载源码
 
     `git clone https://github.com/772413635/isaacTable.git`
@@ -23,7 +23,8 @@ issacTable是一个web版表格控件，可以嵌入你的任何页面，动态�
     `</head>`  
     `<body></body>`  
     `</html>`
-4.  编写js脚本初始化表格
+## 使用
+1.  编写js脚本初始化表格
 
     `<script>`  
     `$(function(){`  
