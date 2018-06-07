@@ -1,7 +1,34 @@
-# IsaacTable
+# isaacTable 
 
-js表控件
+[在线示例](https://app.isaacxu.com/table) |
+[帮助文档](https://app.isaacxu.com/table/doc.html) |
+[关于作者](http://app.isaacxu.com/job)
 
-1、采用json数据格式进行传输
-2、自定义属性设置可满足多种使用场景及业务需求
-3、在线演示地址：http://app.isaacxu.com:9091/table/
+issacTable是一个web版表格控件，可以嵌入你的任何页面，动态展现你的任何数据，简单易用，基于jquery开发。
+
+![issacTable](http://app.isaacxu.com:9091/table/Images/table.jpg)
+
+## 如何安装
+1.  从github上下载源码
+
+    `git clone https://github.com/772413635/isaacTable.git`
+2.  拷贝整个源代码到你的项目中
+3.  在所需要的页面中添加引用
+
+    `<html>`  
+    `<head>`  
+    `<link href="isaacTable/src/css/isaac.table.css" rel="stylesheet" />`  
+    `<script type="text/javascript" src="isaacTable/src/js/jquery-1.9.1.js"></script>`  
+    `<script type="text/javascript" src="isaacTable/src/js/isaac.table.js"></script>`  
+    `</head>`  
+    `<body></body>`  
+    `</html>`
+4.  编写js脚本初始化表格
+
+    `<script>`  
+    `$(function(){`  
+    `    ...`  
+    `    $("#table").isaacTable(option);`  
+    `})`  
+    `</script>`
+

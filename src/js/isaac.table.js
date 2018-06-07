@@ -2,7 +2,7 @@
  * itable表格控件
  * 作者：Meter
  * 邮箱：xhgainxq@gmail.com
- * 说明：参考了miniUI，easyUI等成熟的UI框架以及结合工作这些年的经验，开发了这款简单实用的表格控件，不足之处请大家多多包涵，有问题可以github上Issues。
+ * 说明：这个控件简单易用
  */
 (function ($) {
     /**
@@ -154,11 +154,10 @@
                             $(selector).html("<tr><td><div class='loadDiv'><div class='loading'></div> 正在加载......</div></td></tr>");
                         },
                         success: function (data) {
-                            options.data = data;
                             $(selector).empty();
-                            $("#" + options.foolerId).empty();
-                            $("#" + options.paginationId).empty();
+                            $("#" + options.foolerInfoId).empty();
                             $("#" + options.selectionId).empty();
+                            $("#" + options.paginationId).empty();
                             if (options.ajaxSuccess) {
                                 options.ajaxSuccess(data);
                             } else {
@@ -274,59 +273,59 @@
                 }
                 var li = "";
                 if (options.param.page > 1) {
-                    li += "<li><a>最前页</a></li><li><a>上一页</a></li>";
+                    li += "<li><a data-page='first'>最前页</a></li><li><a data-page='previous'>上一页</a></li>";
                 }
                 switch (pages) {
                     case 0:
                         li += ""; break;
                     case 1:
-                        li += "<li><a>" + 1 + "</a></li>"; break;
+                        li += "<li><a data-page='1'>" + 1 + "</a></li>"; break;
                     case 2:
-                        li += "<li><a>" + 1 + "</a></li>" + "<li><a>" + 2 + "</a></li>"; break;
+                        li += "<li><a data-page='1'>" + 1 + "</a></li>" + "<li><a data-page='2'>" + 2 + "</a></li>"; break;
                     case 3:
-                        li += "<li><a>" + 1 + "</a></li>" + "<li><a>" + 2 + "</a></li>" + "<li><a>" + 3 + "</a></li>"; break;
+                        li += "<li><a data-page='1'>" + 1 + "</a></li>" + "<li><a data-page='2'>" + 2 + "</a></li>" + "<li><a data-page='3'>" + 3 + "</a></li>"; break;
                     default:
                         if (options.param.page <= 3) {
                             for (var n = 1; n <= (options.param.page + 3 > pages ? pages : options.param.page + 3); n++) {
                                 if (n == options.param.page)
                                     li += "<li class='isaac_pagination_active'><a>" + n + "</a></li>";
                                 else
-                                    li += "<li><a>" + n + "</a></li>";
+                                    li += "<li><a data data-page='"+n+"'>" + n + "</a></li>";
                             }
                         } else {
                             for (var m = options.param.page - 3; m <= (options.param.page + 3 > pages ? pages : options.param.page + 3); m++) {
                                 if (m == options.param.page)
-                                    li += "<li class='isaac_pagination_active'><a>" + m + "</a></li>";
+                                    li += "<li class='isaac_pagination_active'><a data-page='"+m+"'>" + m + "</a></li>";
                                 else
-                                    li += "<li><a>" + m + "</a></li>";
+                                    li += "<li><a data-page='"+m+"'>" + m + "</a></li>";
                             }
                         }
                 }
 
 
                 if (options.param.page < pages) {
-                    li += "<li><a>下一页</a></li><li><a>最末页</a></li>";
+                    li += "<li><a data-page='next'>下一页</a></li><li><a data-page='last'>最末页</a></li>";
                 }
                 $("#" + options.paginationId).append("<ul class='isaac_page_right'>"+li+"</ul>");
                 $("#" + options.paginationId + " li").each(function (l) {
                     $(this).css("cursor", "pointer");
                     $(this).click(function () {
                         var gotoPage = 0;
-                        switch (this.innerHTML.toLowerCase().replace("<a>", "").replace("</a>", "")) {
-                            case "最前页":
+                        switch ($(this).children('a').data('page')) {
+                            case "first":
                                 gotoPage = 1;
                                 break;
-                            case "上一页":
+                            case "previous":
                                 gotoPage = options.param.page - 1;
                                 break;
-                            case "最末页":
+                            case "last":
                                 gotoPage = pages;
                                 break;
-                            case "下一页":
+                            case "next":
                                 gotoPage = options.param.page + 1;
                                 break;
                             default:
-                                gotoPage = parseInt(this.innerHTML.toLowerCase().replace("<a>", "").replace("</a>"));
+                                gotoPage = parseInt(this.innerText);
                         }
                         _this.LoadDataPage(gotoPage);
 
