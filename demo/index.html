@@ -8,7 +8,7 @@
     <script type="text/javascript" src="../src/js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="../src/js/isaac.table.js"></script>
     <script>
-        var options={
+        var option={
             multipleSelect:true,
             url:"http://192.168.12.94:5000/api/table/getData",
             param:{page:1,rp:10},
@@ -24,7 +24,7 @@
             ]]
         };
         $(function(){
-            $("#demo").isaacTable(options);
+            $("#demo").isaacTable(option);
         })
     </script>
 </head>
