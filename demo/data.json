@@ -1,5 +1,5 @@
-[{
-"attribute":[{}],
+{
+"attribute":{"rows":[{"id":1,"name":"checkBox","type":"Boolean","default":"true","remark":"是否显示复选框"}],"total":1},
 "method":[{}],
 "event":[{}]
-}]
+}

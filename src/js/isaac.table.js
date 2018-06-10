@@ -46,9 +46,6 @@
         if (options.rowNumber != null && options.rowNumber == false) {
             _options.rowNumber = options.rowNumber;
         }
-        if (options.isFooter != null && options.isFooter == false) {
-            _options.isFooter = options.isFooter;
-        }
         if (options.isPagination != null && options.isPagination == false) {
             _options.isPagination = options.isPagination;
         }
@@ -79,14 +76,16 @@
             options.refreshId = tableKey + refreshKey + i;
             options.paginationId = tableKey + paginationKey + i;
             //table加上底部
-            $("#"+options.baseToolbarId).remove();
-            $(selector).after(
-                "<div id='" + options.baseToolbarId + "' class='isaac_page'>" +
-                "<div id='" + options.foolerInfoId + "'></div>" + 
-                "<div id='" + options.selectionId + "' class='isaac_page_left isaac_selection'></div>"+
-                "<div id='" + options.refreshId +"' class='isaac_refresh' title='刷新'></div>"+
-                "<div id='" +options.paginationId+"' class='isaac_pagination'></div>" +
-                "</div>");
+            if(options.isPagination){
+                $("#"+options.baseToolbarId).remove();
+                $(selector).after(
+                    "<div id='" + options.baseToolbarId + "' class='isaac_page'>" +
+                    "<div id='" + options.foolerInfoId + "'></div>" + 
+                    "<div id='" + options.selectionId + "' class='isaac_page_left isaac_selection'></div>"+
+                    "<div id='" + options.refreshId +"' class='isaac_refresh' title='刷新'></div>"+
+                    "<div id='" +options.paginationId+"' class='isaac_pagination'></div>" +
+                    "</div>"); 
+            }
             if ($(selector).width() > 0) {
                 $("#"+baseToolbarId).outerWidth($(selector).width());
             }
@@ -131,12 +130,9 @@
                     } else {
                         priveTable(options.data);
                     }
-
-                    loadPageList();
-                    if (options.isFooter) {
-                        loadFooter(options.data);
-                    }
                     if (options.isPagination) {
+                        loadPageList();
+                        loadFooter(options.data);
                         loadPagination(options.data);
                     }
                     if (options.loadSuccess) {
@@ -163,11 +159,9 @@
                             } else {
                                 priveTable(data);
                             }
-                            if (options.isFooter) {
-                                loadFooter(data);
-                            }
-                            loadPageList();
                             if (options.isPagination) {
+                                loadFooter(data);
+                                loadPageList();
                                 loadPagination(data);
                             }
                             if (options.loadSuccess) {
