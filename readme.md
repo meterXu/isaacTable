@@ -6,7 +6,7 @@
 
 issacTable是一个web版表格控件，可以嵌入你的任何页面，动态展现你的任何数据，简单易用，基于jquery开发。
 
-![issacTable](http://app.isaacxu.com:9091/table/Images/table.jpg)
+![issacTable](http://app.isaacxu.com:9091/table/demo/table.jpg)
 
 ## 安装
 1.  从github上下载源码
