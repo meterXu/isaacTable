@@ -15,10 +15,9 @@
         var _options = {
             checkBox: true, //是否显示复选框
             rowNumber: true, //是否显示编号
-            isFooter: true, //是否显示底部
             isPagination: true, //是否显示分页
             type: "post",//ajax请求类型
-            ajaxDataType: "json",//返回数据类型
+            dataType: "json",//返回数据类型
             pageList: [5, 10, 15, 20],//显示条数下拉框
             param: { page: 1, rp: 5 }, //默认分页对象
             textAlign: 'left', //默认文字水平排列方式
@@ -250,7 +249,7 @@
                 $("#" + options.refreshId).click(function () {
                     _this.reLoad();
                 });
-                $("#" + options.pageSelectId).children("select").change(function () {
+                $("#" + options.selectionId).children("select").change(function () {
                     options.param.page = 1;
                     options.param.rp = this.value;
                     _this.reLoad();

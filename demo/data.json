@@ -1,5 +1,22 @@
 {
-"attribute":{"rows":[{"id":1,"name":"checkBox","type":"Boolean","default":"true","remark":"是否显示复选框"}],"total":1},
-"method":[{}],
-"event":[{}]
+"attribute":{"rows":[
+    {"id":1,"name":"checkBox","type":"boolean","default":"true","remark":"是否显示复选框"},
+    {"id":2,"name":"rowNumber","type":"boolean","default":"true","remark":"是否显示编号"},
+    {"id":3,"name":"isPagination","type":"boolean","default":"true","remark":"是否显示底部分页栏"},
+    {"id":4,"name":"type","type":"string","default":"post","remark":"ajax请求类型"},
+    {"id":5,"name":"dataType","type":"string","default":"json","remark":"ajax数据返回类型"},
+    {"id":6,"name":"pageList","type":"array","default":"[5, 10, 15, 20]","remark":"分页栏内下拉框中的数据"},
+    {"id":7,"name":"param","type":"object","default":"{ page: 1, rp: 5 }","remark":"分页对象，各属性意义：<br/>page:当前页数<br/>rp:每页显示的条数"},
+    {"id":8,"name":"textAlign","type":"string","default":"left","remark":"表格内文字对齐方式，可用值：<br/>left:左对齐<br/>center:居中对齐"},
+    {"id":9,"name":"isCheckNull","type":"boolean","default":"true","remark":"检查空值，若不检查，数据为空则显示原始值，若检查，数据为空则显示空字符串"},
+    {"id":10,"name":"selectOnCheck","type":"boolean","default":"true","remark":"选中数据同时选中复选框"},
+    {"id":11,"name":"multipleSelect","type":"boolean","default":"true","remark":"是否可以选择多条数据"},
+    {"id":11,"name":"cellResize","type":"boolean","default":"true","remark":"是否可以拖拉单元格"}
+    ],"total":11},
+"method":{"rows":[
+    {"id":1,"name":"","param":"","remark":""}
+],"total":1},
+"event":{"rows":[
+    {"id":1,"name":"","param":"","remark":""}
+],"total":1}
 }
