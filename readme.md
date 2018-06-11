@@ -11,15 +11,15 @@ issacTable是一个web版表格控件，可以嵌入你的任何页面，动态�
 ## 安装
 1.  从github上下载源码
 
-    `git clone https://github.com/772413635/isaacTable.git`
+    `git clone https://github.com/meterxu/isaactable.git`
 2.  拷贝整个源代码到你的项目中
 3.  在所需要的页面中添加引用
 
     `<html>`  
     `<head>`  
-    `<link href="isaacTable/src/css/isaac.table.css" rel="stylesheet" />`  
-    `<script type="text/javascript" src="isaacTable/src/js/jquery-1.9.1.js"></script>`  
-    `<script type="text/javascript" src="isaacTable/src/js/isaac.table.js"></script>`  
+    `<link href="isaactable/src/css/isaac.table.css" rel="stylesheet" />`  
+    `<script type="text/javascript" src="isaactable/src/js/jquery-1.9.1.js"></script>`  
+    `<script type="text/javascript" src="isaactable/src/js/isaac.table.js"></script>`  
     `</head>`  
     `<body></body>`  
     `</html>`
@@ -29,7 +29,7 @@ issacTable是一个web版表格控件，可以嵌入你的任何页面，动态�
     `<script>`  
     `$(function(){`  
     `    ...`  
-    `    $("#table").isaacTable(option);`  
+    `    $("#table").isaactable(option);`  
     `})`  
     `</script>`
 
