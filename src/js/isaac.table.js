@@ -57,7 +57,7 @@
         this.each(function (i, d) {
             res.push(inititable(i, d, _options));
         });
-        return res;
+        return res.length>1?res:res[0];
         //初始化itable
         function inititable(i, selector, options) {
             var _this=this;
@@ -92,7 +92,10 @@
             loadToolbar(options.toolbar);
             loadTableHeader();
             loadData();
-            this.options = options;
+            //获取表对象属性
+            this.getOptions = function () {
+                return options;
+            } 
             //返回选中的值集合
             this.getSelection = function () {
                 var selectValue = new Array();
@@ -108,13 +111,14 @@
                 loadData();
             };
             //加载第一页数据
-            this.LoadFirst = function () {
+            this.loadFirst = function () {
                 options.param.page = 1;
                 loadData();
             };
             //加载某一页数据
-            this.LoadDataPage = function (page) {
+            this.loadDataPage = function (page,rp) {
                 options.param.page = page;
+                options.param.rp=rp||options.param.rp;
                 loadData();
             };
             //加载数据，生成表，或者其他神马
@@ -320,7 +324,7 @@
                             default:
                                 gotoPage = parseInt(this.innerText);
                         }
-                        _this.LoadDataPage(gotoPage);
+                        _this.loadDataPage(gotoPage);
 
                     });
                 });
@@ -476,6 +480,7 @@
                 }
 
             }
+            return this;
         }
 
         function computePx(dmo) {

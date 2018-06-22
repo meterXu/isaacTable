@@ -14,9 +14,13 @@
     {"id":11,"name":"cellResize","type":"boolean","default":"true","remark":"是否可以拖拉单元格"}
     ],"total":11},
 "method":{"rows":[
-    {"id":1,"name":"","param":"","remark":""}
+    {"id":1,"name":"getOptions","param":"none","remark":"获取表格对象的属性"},
+    {"id":2,"name":"getSelection","param":"none","remark":"返回选中数据的第一列的值集合,生成表格时，配置第一列作为复选框绑定的值"},
+    {"id":3,"name":"reLoad","param":"none","remark":"刷新当前页的数据"},
+    {"id":4,"name":"loadFirst","param":"none","remark":"加载表格第一页的数据"},
+    {"id":5,"name":"loadDataPage","param":"page,rp","remark":"加载表格数据<br/>page：页数，rp：每页加载条数，该参数可不传，默认为表格中页数下拉框中的值"}
 ],"total":1},
 "event":{"rows":[
-    {"id":1,"name":"","param":"","remark":""}
+    {"id":1,"name":"ajaxSuccess","param":"data","remark":"ajax请求成功后执行的事件，配置该事件后，表格将不再生成"}
 ],"total":1}
 }
