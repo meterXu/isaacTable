@@ -62,31 +62,33 @@
         function inititable(i, selector, options) {
             var _this=this;
             var tableKey = "isaacTable_",//表格标识
-                baseToolbarKey = "baseToolbar_",//表格底部toolbar标识
-                foolerInfoKey = "foolerInfo_",//表格底部toolbar内分页信息标识
-                selectionKey = "selection_",//表格底部toolbar内下拉框标识
-                refreshKey = "refresh_",//表格底部toolbar内刷新按钮标识
-                paginationKey = "pagination_";//表格底部toolbar内分页标识
+                baseToolbarkey = "baseToolbar_",
+                basefooterKey = "basefooter_",//表格底部footerbar标识
+                footerInfoKey = "footerInfo_",//表格底部footerbar内分页信息标识
+                selectionKey = "selection_",//表格底部footerbar内下拉框标识
+                refreshKey = "refresh_",//表格底部footerbar内刷新按钮标识
+                paginationKey = "pagination_";//表格底部footerbar内分页标识
             //Id复制
             var nojTableId = tableKey + i;
-            options.baseToolbarId = tableKey + baseToolbarKey + i;
-            options.foolerInfoId = tableKey + foolerInfoKey + i;
+            options.baseToolbarId=tableKey + baseToolbarkey + i;
+            options.basefooterId = tableKey + basefooterKey + i;
+            options.footerInfoId = tableKey + footerInfoKey + i;
             options.selectionId = tableKey + selectionKey + i;
             options.refreshId = tableKey + refreshKey + i;
             options.paginationId = tableKey + paginationKey + i;
             //table加上底部
             if(options.isPagination){
-                $("#"+options.baseToolbarId).remove();
+                $("#"+options.basefooterId).remove();
                 $(selector).after(
-                    "<div id='" + options.baseToolbarId + "' class='isaac_page'>" +
-                    "<div id='" + options.foolerInfoId + "'></div>" + 
+                    "<div id='" + options.basefooterId + "' class='isaac_page'>" +
+                    "<div id='" + options.footerInfoId + "'></div>" + 
                     "<div id='" + options.selectionId + "' class='isaac_page_left isaac_selection'></div>"+
                     "<div id='" + options.refreshId +"' class='isaac_refresh' title='刷新'></div>"+
                     "<div id='" +options.paginationId+"' class='isaac_pagination'></div>" +
                     "</div>"); 
             }
             if ($(selector).width() > 0) {
-                $("#"+baseToolbarId).outerWidth($(selector).width());
+                $("#"+basefooterId).outerWidth($(selector).width());
             }
             //加载toolbar
             loadToolbar(options.toolbar);
@@ -125,7 +127,7 @@
             function loadData() {
                 if (options.data != null) {
                     $(selector).empty();
-                    $("#" + options.foolerInfoId).empty();
+                    $("#" + options.footerInfoId).empty();
                     $("#" + options.selectionId).empty();
                     $("#" + options.paginationId).empty();
                     if (options.ajaxSuccess) {
@@ -154,7 +156,7 @@
                         },
                         success: function (data) {
                             $(selector).empty();
-                            $("#" + options.foolerInfoId).empty();
+                            $("#" + options.footerInfoId).empty();
                             $("#" + options.selectionId).empty();
                             $("#" + options.paginationId).empty();
                             if (options.ajaxSuccess) {
@@ -336,10 +338,9 @@
             //加载表头
             function loadTableHeader() {
                 if (options.tableHeader != null) {
-
-                    $("#" + nojTableId + "_tableHeader").html(options.tableHeader);
+                   var tableHeader= "</div><div id=" + nojTableId + "_tableHeader>"+options.tableHeader+"</div>"
+                    $(selector).before(tableHeader);
                 }
-
             }
 
             //加载toolbar
@@ -347,9 +348,8 @@
                 if (data != null && data.length >= 1) {
                     var toobar = "<div id='" + options.baseToolbarId + "' class='isaac_operate'>";
                     for (var i = 0; i < data.length; i++) {
-                        toobar += " <a href='javascript:void(0);' id='" + selector + "_" + data[i].id + "' ><i class='icon " + data[i].icon + "'></i>" + data[i].text + "</a>";
+                        toobar += " <a href='javascript:void(0);' id='" + options.baseToolbarId + "_" + data[i].key + "' ><i class='icon " + data[i].icon + "'></i>" + data[i].text + "</a>";
                     }
-                    toobar += "</div><div id=" + nojTableId + "_tableHeader></div>";
                     $(selector).before(toobar);
 
                     $(data).each(function (j, n) {

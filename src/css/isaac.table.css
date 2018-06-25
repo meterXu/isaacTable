@@ -202,7 +202,7 @@
     display: inline-block;
     background-repeat: no-repeat;
     background-position: 14px 14px;
-    background-image: url(icons-white.png);
+    background-image: url(../imgs/icons-white.png);
 }
 
 .icon-plus {

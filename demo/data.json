@@ -11,16 +11,32 @@
     {"id":9,"name":"isCheckNull","type":"boolean","default":"true","remark":"检查空值，若不检查，数据为空则显示原始值，若检查，数据为空则显示空字符串"},
     {"id":10,"name":"selectOnCheck","type":"boolean","default":"true","remark":"选中数据同时选中复选框"},
     {"id":11,"name":"multipleSelect","type":"boolean","default":"true","remark":"是否可以选择多条数据"},
-    {"id":11,"name":"cellResize","type":"boolean","default":"true","remark":"是否可以拖拉单元格"}
-    ],"total":11},
+    {"id":11,"name":"cellResize","type":"boolean","default":"true","remark":"是否可以拖拉单元格"},
+    {"id":12,"name":"tableHeader","type":"html","default":"none","remark":"表格左上方内容"},
+    {"id":13,"name":"toolbar","type":"Array","default":"none","remark":"表格上方工具栏内容，数据格式如下：<br/> [{<br/>key:\"add\",<br/>icon:\"icon-plus\",<br/>text:\"添加\",<br/>handler:function(){}<br/>}]<br/>icon图标见图标列表"}
+    ],"total":13},
+"colAttribute":{"rows":[
+    {"id":1,"name":"formatter","type":"function","default":"none","remark":"列数据格式化函数"}
+],"total":1},
 "method":{"rows":[
     {"id":1,"name":"getOptions","param":"none","remark":"获取表格对象的属性"},
     {"id":2,"name":"getSelection","param":"none","remark":"返回选中数据的第一列的值集合,生成表格时，配置第一列作为复选框绑定的值"},
     {"id":3,"name":"reLoad","param":"none","remark":"刷新当前页的数据"},
     {"id":4,"name":"loadFirst","param":"none","remark":"加载表格第一页的数据"},
     {"id":5,"name":"loadDataPage","param":"page,rp","remark":"加载表格数据<br/>page：页数，rp：每页加载条数，该参数可不传，默认为表格中页数下拉框中的值"}
-],"total":1},
+],"total":5},
 "event":{"rows":[
-    {"id":1,"name":"ajaxSuccess","param":"data","remark":"ajax请求成功后执行的事件，配置该事件后，表格将不再生成"}
-],"total":1}
+    {"id":1,"name":"ajaxSuccess","param":"data","remark":"ajax请求成功后执行的事件，配置该事件后，表格将不再生成"},
+    {"id":2,"name":"loadSuccess","param":"data","remark":"表格加载成功之后执行的事件"}
+],"total":2},
+"icon":{
+    "rows":[
+        {"id":1,"name":"icon-plus","remark":"添加"},
+        {"id":2,"name":"icon-edit","remark":"修改"},
+        {"id":3,"name":"icon-trash","remark":"删除"},
+        {"id":4,"name":"icon-export","remark":"导出"},
+        {"id":5,"name":"icon-print","remark":"打印"}
+    ],
+    "total":5
+}
 }
