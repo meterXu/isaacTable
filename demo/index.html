@@ -5,35 +5,63 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>isaacTableDemo</title>
     <link href="../src/css/isaac.table.css" rel="stylesheet" />
+    <style>
+        #searchFar {
+            height: 24px;
+            line-height: 24px;
+            margin: 5px 0px;
+        }
+
+        #searchBtn {
+            height: 21px;
+            vertical-align: middle;
+            cursor: pointer;
+            border: 1px solid #a9a9a9;
+            border-left: none;
+        }
+    </style>
     <script type="text/javascript" src="../src/js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="../src/js/isaac.table.js"></script>
     <script>
-        var option={
-            multipleSelect:true,
-            url:"http://www.isaacxu.com:8100/api/table/getData",
-            param:{page:1,rp:10},
-            type:"get",
-            dataType:"jsonp",
-            textAlign:"left",
-            columns:[[                
-                {title:"序号",field:"Id"},
-                {title:"名称",field:"Name"},
-                {title:"Key",field:"Function"},
-                {title:"创建时间",field:"CreateTime"},
-                {title:"排序号",field:"Sort"},
-                {title:"状态",field:"Status"}
+        var option = {
+            multipleSelect: true,
+            url: "http://www.isaacxu.com:8100/api/table/getData",
+            param: { page: 1, rp: 10 },
+            type: "get",
+            dataType: "jsonp",
+            textAlign: "left",
+            columns: [[
+                { title: "序号", field: "Id" },
+                { title: "名称", field: "Name" },
+                { title: "Key", field: "Function" },
+                { title: "创建时间", field: "CreateTime" },
+                { title: "排序号", field: "Sort" },
+                { title: "状态", field: "Status" }
             ]],
-            toolbar:[{
-                key:"add",
-                icon:"icon-plus",
-                text:"添加"
-
+            toolbar: [{
+                key: "add",
+                icon: "icon-plus",
+                text: "添加"
+            },{
+                key: "add",
+                icon: "icon-edit",
+                text: "修改"
+            },{
+                key: "add",
+                icon: "icon-trash",
+                text: "删除"
             }],
-            tableHeader:"<div>示例表</div>"
+            tableHeader: "<div id='searchFar'><input id='searchIpt' type='text' placeholder='请输入名称'/><input id='searchBtn' type='button' value='查询'/></div>"
         };
-        var  data;
-        $(function(){
-          data =$("#demo").isaacTable(option);
+        var table;
+        $(function () {
+            table = $("#demo").isaacTable(option);
+            $("#searchBtn").on({
+                'click': function () {
+                    table.getOptions().param.query = $("#searchIpt").val();
+                    table.reLoad();
+                }
+            })
         })
     </script>
 </head>
