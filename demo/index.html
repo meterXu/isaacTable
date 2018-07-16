@@ -19,13 +19,36 @@
             border: 1px solid #a9a9a9;
             border-left: none;
         }
+
+        .dialog {
+            display: none;
+        }
+
+        .shadow {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            text-align: center
+        }
+
+        .formDiv {
+            width: 500px;
+            display: inline-block;
+            height: 300px;
+            vertical-align: middle;
+            background: #fff;
+            border: 1px solid #333;
+        }
     </style>
     <script type="text/javascript" src="../src/js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="../src/js/isaac.table.js"></script>
     <script>
         var option = {
             multipleSelect: true,
-            url: "http://www.isaacxu.com:8100/api/table/getData",
+            url: "http://localhost:8100/api/table/getData",
             param: { page: 1, rp: 10 },
             type: "get",
             dataType: "jsonp",
@@ -41,15 +64,77 @@
             toolbar: [{
                 key: "add",
                 icon: "icon-plus",
-                text: "添加"
-            },{
-                key: "add",
+                text: "添加",
+                handler: function () {
+                    $.ajax({
+                        url: "http://localhost:8100/api/table/addData",
+                        data: { Name: "~~测试~~", Function: "Test", Sort: 100 },
+                        type: 'get',
+                        dataType: 'jsonp',
+                        success: function (res) {
+                            if (res == 1) {
+                                alert("添加成功！");
+                            } else {
+                                alert("添加失败！");
+                            }
+                            //刷新表格
+                            table.loadFirst()
+                        }
+                    })
+                }
+            }, {
+                key: "edit",
                 icon: "icon-edit",
-                text: "修改"
-            },{
-                key: "add",
+                text: "修改",
+                handler: function () {
+                    var selected = table.getSelection();
+                    if (selected.length == 1) {
+                        $.ajax({
+                            url: "http://localhost:8100/api/table/addData",
+                            data: { Id:selected[0], Name: "测试[修改]", Function: "Test[edit]"},
+                            type: 'get',
+                            dataType: 'jsonp',
+                            success: function (res) {
+                                if (res == 1) {
+                                    alert("修改成功！");
+                                } else {
+                                    alert("修改失败！");
+                                }
+                                //刷新表格
+                                table.reLoad();
+                            }
+                        })
+                    } else {
+                        alert("请选择一条数据进行修改！");
+                    }
+
+                }
+            }, {
+                key: "remove",
                 icon: "icon-trash",
-                text: "删除"
+                text: "删除",
+                handler: function () {
+                    var selected = table.getSelection();
+                    if (selected.length > 0) {
+                        $.ajax({
+                            url: "http://localhost:8100/api/table/deleteData",
+                            data: { ids: selected.join(',') },
+                            type: 'get',
+                            dataType: 'jsonp',
+                            success: function (res) {
+                                if (res == 1) {
+                                    alert("删除成功！");
+                                } else {
+                                    alert("删除失败！");
+                                }
+                                //刷新表格
+                                table.loadFirst()
+                            }
+                        })
+                    } else {
+                        alert("请选择需要删除的数据！");
+                    }
+                }
             }],
             tableHeader: "<div id='searchFar'><input id='searchIpt' type='text' placeholder='请输入名称'/><input id='searchBtn' type='button' value='查询'/></div>"
         };

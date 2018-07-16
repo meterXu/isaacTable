@@ -231,10 +231,10 @@
             //加载底部信息栏
             function loadFooter(data) {
                 //加载左下角
-                $("#" + options.foolerInfoId).addClass("isaac_page_left");
+                $("#" + options.footerInfoId).addClass("isaac_page_left");
                 var one = (data.total == 0) ? 0 : (options.param.page - 1) * options.param.rp + 1;
                 var two = options.param.page * options.param.rp <= data.total ? options.param.page * options.param.rp : data.total;
-                $("#" + options.foolerInfoId).append("<div class='page-txt'>第" + one + "-" + two + "条  /  共" + data.total + "条数据</div>");
+                $("#" + options.footerInfoId).append("<div class='page-txt'>第" + one + "-" + two + "条  /  共" + data.total + "条数据</div>");
             };
 
             //加载每页显示页数
@@ -353,7 +353,7 @@
                     $(selector).before(toobar);
 
                     $(data).each(function (j, n) {
-                        $("a[id='" + selector + "_" + n.id + "']").click(function () {
+                        $("a[id='" + options.baseToolbarId + "_" + n.key + "']").click(function () {
                             n.handler();
                         });
                     });
