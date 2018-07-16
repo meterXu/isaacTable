@@ -27,33 +27,7 @@
             cellResize: true//是否可以拖拉单元格
         };
         //赋值
-        _options.url = options.url||_options.url;
-        _options.columns = options.columns||_options.columns;
-        _options.toolbar = options.toolbar||_options.toolbar;
-        _options.type = options.type||_options.type;
-        _options.dataType = options.dataType||_options.dataType;
-        _options.data = options.data||_options.data;
-        _options.pageList = options.pageList||_options.pageList;
-        _options.tableHeader = options.tableHeader||_options.tableHeader;
-        _options.ajaxSuccess = options.ajaxSuccess||_options.ajaxSuccess;
-        _options.loadSuccess = options.loadSuccess||_options.loadSuccess;
-        _options.param = options.param||_options.param;
-        _options.textAlign = options.textAlign||_options.textAlign;
-        if (options.checkBox != null && options.checkBox == false) {
-            _options.checkBox = options.checkBox;
-        }
-        if (options.rowNumber != null && options.rowNumber == false) {
-            _options.rowNumber = options.rowNumber;
-        }
-        if (options.isPagination != null && options.isPagination == false) {
-            _options.isPagination = options.isPagination;
-        }
-        if (options.isCheckNull != null && options.isCheckNull == false) {
-            _options.isCheckNull = options.isCheckNull;
-        }
-        if (options.multipleSelect != null && options.multipleSelect == false) {
-            _options.multipleSelect = options.multipleSelect;
-        }
+        _options=$.extend(_options,options);
         this.each(function (i, d) {
             res.push(inititable(i, d, _options));
         });
