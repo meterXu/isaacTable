@@ -78,6 +78,8 @@
                                 alert("添加失败！");
                             }
                             //刷新表格
+                            table.getOptions().param.query="";
+                            $("#searchIpt").val("");
                             table.loadFirst()
                         }
                     })
@@ -101,6 +103,8 @@
                                     alert("修改失败！");
                                 }
                                 //刷新表格
+                                table.getOptions().param.query="";
+                                $("#searchIpt").val("");
                                 table.reLoad();
                             }
                         })
@@ -128,6 +132,8 @@
                                     alert("删除失败！");
                                 }
                                 //刷新表格
+                                table.getOptions().param.query="";
+                                $("#searchIpt").val("");
                                 table.loadFirst()
                             }
                         })
