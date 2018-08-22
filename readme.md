@@ -2,7 +2,6 @@
 
 [在线示例](http://app.isaacxu.com/table) |
 [帮助文档](http://app.isaacxu.com/table/demo/doc.html) |
-[关于作者](http://app.isaacxu.com/job)
 
 issacTable是一个web版表格控件，可以嵌入你的任何页面，动态展现你的任何数据，简单易用，基于jquery开发。
 
