@@ -1,5 +1,5 @@
 # isaacTable 
-![license]https://img.shields.io/github/license/meterXu/isaacTable.svg  
+![license](https://img.shields.io/github/license/meterXu/isaacTable.svg)    
 [在线示例](http://app.isaacxu.com/table) |
 [帮助文档](http://app.isaacxu.com/table/demo/doc.html) |
 
