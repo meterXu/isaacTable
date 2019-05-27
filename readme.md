@@ -3,7 +3,7 @@
 [在线示例](https://app.isaacxu.com/table) |
 [帮助文档](https://app.isaacxu.com/table/demo/doc.html) |
 
-issacTable是一个web版表格控件，可以嵌入你的任何页面，动态展现你的任何数据，简单易用，基于jquery开发。
+issacTable是一个web版表格控件，可以嵌入你的页面，动态展现你的数据，简单易用，基于jquery开发。
 
 ![issacTable](https://app.isaacxu.com/table/demo/table.jpg)
 
