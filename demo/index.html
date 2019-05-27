@@ -42,114 +42,85 @@
             background: #fff;
             border: 1px solid #333;
         }
+        .wordCardShadow{
+            display: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: rgba(50, 50, 50, 0.5)
+        }
+        .wordCard{
+            width: 350px;
+            height: 400px;
+            background: #fdfdfd;
+            border: 1px solid #adadad;
+            box-shadow: 6px -6px 0px #44cc9c, 6px 6px 0px #44cc9c, -6px -6px 0px #44cc9c, -6px 6px 0px #44cc9c, 0px 0px 16px #083a07;
+            border-radius: 5px;
+            position: relative;
+            margin: 0 auto;
+            top: 240px;
+        }
     </style>
     <script type="text/javascript" src="../src/js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="../src/js/isaac.table.js"></script>
     <script>
+        let backstageUrl="http://localhost:3000/";
         var option = {
             multipleSelect: true,
-            url: "http://www.isaacxu.com:8100/api/table/getData",
+            url: backstageUrl+"table/query",
             param: { page: 1, rp: 10 },
-            type: "get",
-            dataType: "jsonp",
+            type: "post",
+            dataType: "json",
             textAlign: "left",
             columns: [[
-                { title: "序号", field: "Id" },
-                { title: "名称", field: "Name" },
-                { title: "Key", field: "Function" },
-                { title: "创建时间", field: "CreateTime" },
-                { title: "排序号", field: "Sort" },
-                { title: "状态", field: "Status" }
+                { title: "序号", field: "id" },
+                { title: "字母", field: "name" },
+                { title: "大写字母", field: "lName" },
+                { title: "单词", field: "example" },
+                { title: "中文", field: "chinese" },
+                { title: "操作", field: "id",formatter:function(v){
+                    return '<a href="javascript:;" onclick="viewCard('+v+')">查看卡片</a>'
+                    } }
             ]],
             toolbar: [{
-                key: "add",
-                icon: "icon-plus",
-                text: "添加",
-                handler: function () {
-                    $.ajax({
-                        url: "http://www.isaacxu.com:8100/api/table/addData",
-                        data: { Name: "~~测试~~", Function: "Test", Sort: 100 },
-                        type: 'get',
-                        dataType: 'jsonp',
-                        success: function (res) {
-                            if (res == 1) {
-                                alert("添加成功！");
-                            } else {
-                                alert("添加失败！");
-                            }
-                            //刷新表格
-                            table.getOptions().param.query="";
-                            $("#searchIpt").val("");
-                            table.loadFirst()
-                        }
-                    })
-                }
-            }, {
-                key: "edit",
-                icon: "icon-edit",
-                text: "修改",
+                key: "view",
+                icon: "icon-view",
+                text: "查看卡片",
                 handler: function () {
                     var selected = table.getSelection();
                     if (selected.length == 1) {
-                        $.ajax({
-                            url: "http://www.isaacxu.com:8100/api/table/addData",
-                            data: { Id:selected[0], Name: "测试[修改]", Function: "Test[edit]"},
-                            type: 'get',
-                            dataType: 'jsonp',
-                            success: function (res) {
-                                if (res == 1) {
-                                    alert("修改成功！");
-                                } else {
-                                    alert("修改失败！");
-                                }
-                                //刷新表格
-                                table.getOptions().param.query="";
-                                $("#searchIpt").val("");
-                                table.reLoad();
-                            }
-                        })
+                        viewCard(selected[0]);
                     } else {
                         alert("请选择一条数据进行修改！");
                     }
 
                 }
-            }, {
-                key: "remove",
-                icon: "icon-trash",
-                text: "删除",
-                handler: function () {
-                    var selected = table.getSelection();
-                    if (selected.length > 0) {
-                        $.ajax({
-                            url: "http://www.isaacxu.com:8100/api/table/deleteData",
-                            data: { ids: selected.join(',') },
-                            type: 'get',
-                            dataType: 'jsonp',
-                            success: function (res) {
-                                if (res == 1) {
-                                    alert("删除成功！");
-                                } else {
-                                    alert("删除失败！");
-                                }
-                                //刷新表格
-                                table.getOptions().param.query="";
-                                $("#searchIpt").val("");
-                                table.loadFirst()
-                            }
-                        })
-                    } else {
-                        alert("请选择需要删除的数据！");
-                    }
-                }
             }],
-            tableHeader: "<div id='searchFar'><input id='searchIpt' type='text' placeholder='请输入名称'/><input id='searchBtn' type='button' value='查询'/></div>"
+            tableHeader: "<div id='searchFar'><input id='searchIpt' type='text' placeholder='请输入字母'/><input id='searchBtn' type='button' value='查询'/></div>"
         };
         var table;
+        function viewCard(id){
+            $.ajax({
+                url: backstageUrl+"table/getItemData",
+                data: { id:id},
+                type: 'post',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.hasOwnProperty('id')) {
+                        $(".wordCardShadow").show();
+                    } else {
+                        alert("请选择一条数据进行查看！");
+                    }
+                }
+            })
+        }
         $(function () {
             table = $("#demo").isaacTable(option);
             $("#searchBtn").on({
                 'click': function () {
-                    table.getOptions().param.query = $("#searchIpt").val();
+                    table.getOptions().param.query =JSON.stringify({"name":$("#searchIpt").val()});
                     table.reLoad();
                 }
             })
@@ -160,6 +131,20 @@
 <body>
     <div>
         <table id="demo"></table>
+        <div class="wordCardShadow">
+            <div class="wordCard">
+                <div class="letter">
+                    <span>A</span>
+                    <span>a</span>
+                </div>
+                <div class="word">
+                    <span>apple</span>
+                </div>
+                <div class="chinese">
+                    <span>苹果</span>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

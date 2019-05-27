@@ -127,7 +127,7 @@
 
 .loadDiv{
   height: 35px;
-  line-height: 35px;  
+  line-height: 35px;
   text-align: center;
 }
 .loading{
@@ -223,6 +223,9 @@
 
 .icon-print {
     background-position: -96px -48px;
+}
+.icon-view {
+    background-position: -95px -120px;
 }
 /*拖动单元格*/
 .isaac_layout {
