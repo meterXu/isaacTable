@@ -53,15 +53,15 @@
             background: rgba(50, 50, 50, 0.5)
         }
         .wordCard{
-            width: 350px;
-            height: 400px;
+            display: block;
+            width: 70px;
+            height: 80px;
+            opacity: 0.4;
             background: #fdfdfd;
-            /*border: 1px solid #adadad;*/
             box-shadow: 6px -6px 0px #44cc9c, 6px 6px 0px #44cc9c, -6px -6px 0px #44cc9c, -6px 6px 0px #44cc9c, 0px 0px 16px #083a07;
             border-radius: 5px;
             position: relative;
             margin: 0 auto;
-            top: 240px;
             text-align: center;
             background: #f4f0e6;
         }
@@ -140,6 +140,7 @@
         };
         var table;
         function viewCard(id){
+            debugger;
             $.ajax({
                 url: backstageUrl+"table/getItemData",
                 data: { id:id},
@@ -151,7 +152,14 @@
                         $(".letter span:eq(1)").text(res.name);
                         $(".word span").text(res.example);
                         $(".chinese span").text(res.chinese);
-                        $(".wordCardShadow").show();
+                        $(".wordCardShadow").show(0,function(){
+                            $('.wordCard').animate({
+                                width: "350px",
+                                height: "400px",
+                                opacity:1,
+                                top:($(window).height()/2-400/2)+"px"
+                            },300);
+                        });
                     } else {
                         alert("请选择一条数据进行查看！");
                     }
@@ -159,16 +167,27 @@
             })
         }
         $(function () {
+            let wordCardTop = ($(window).height()/2-240/2)+"px";
+            $('.wordCard').css({
+                top:wordCardTop
+            });
             table = $("#demo").isaacTable(option);
             $("#searchBtn").on({
                 'click': function () {
                     table.getOptions().param.query =JSON.stringify({"name":$("#searchIpt").val()});
                     table.reLoad();
                 }
-            })
+            });
             $(".wordCardShadow").click(function () {
-                $(this).hide();
-            })
+                $(".wordCardShadow").hide(0,function(){
+                    $('.wordCard').css({
+                        width: "70px",
+                        height: "80px",
+                        opacity:0.4,
+                        top:wordCardTop
+                    });
+                });
+            });
             $(".wordCard").click(function () {
                 event.stopPropagation();
             })
