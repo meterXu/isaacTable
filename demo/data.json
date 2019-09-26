@@ -18,7 +18,7 @@
 "colAttribute":{"rows":[
     {"id":1,"name":"width","type":"string","default":"none","remark":"列宽，可以是px，也可以是%"},
     {"id":2,"name":"formatter","type":"function","default":"none","remark":"列数据格式化函数"}
-],"total":1},
+],"total":2},
 "method":{"rows":[
     {"id":1,"name":"getOptions","param":"none","remark":"获取表格对象的属性"},
     {"id":2,"name":"getSelection","param":"none","remark":"返回选中数据的第一列的值集合,生成表格时，配置第一列作为复选框绑定的值"},

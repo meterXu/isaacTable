@@ -55,14 +55,14 @@
                 $("#"+options.basefooterId).remove();
                 $(selector).after(
                     "<div id='" + options.basefooterId + "' class='isaac_page'>" +
-                    "<div id='" + options.footerInfoId + "'></div>" + 
+                    "<div id='" + options.footerInfoId + "'></div>" +
                     "<div id='" + options.selectionId + "' class='isaac_page_left isaac_selection'></div>"+
                     "<div id='" + options.refreshId +"' class='isaac_refresh' title='刷新'></div>"+
                     "<div id='" +options.paginationId+"' class='isaac_pagination'></div>" +
-                    "</div>"); 
+                    "</div>");
             }
             if ($(selector).width() > 0) {
-                $("#"+basefooterId).outerWidth($(selector).width());
+                $("#"+options.basefooterId).outerWidth($(selector).width());
             }
             //加载toolbar
             loadToolbar(options.toolbar);
@@ -71,7 +71,7 @@
             //获取表对象属性
             this.getOptions = function () {
                 return options;
-            } 
+            }
             //返回选中的值集合
             this.getSelection = function () {
                 var selectValue = new Array();
@@ -221,7 +221,7 @@
                         }else{
                             select += "<option value='" + options.pageList[i] + "'>每页" + options.pageList[i] + "条</option>";
                         }
-                       
+
                     }
                     select += "</select>";
                     $("#" +  options.selectionId).append(select);
