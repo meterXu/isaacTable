@@ -53,6 +53,20 @@
             bottom: 0;
             background: rgba(50, 50, 50, 0.5)
         }
+        .viewCard {
+            background: #2e8a64;
+            border: 1px;
+            border-radius: 3px;
+            padding: 3px 6px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .viewCard:hover{
+            background: #31ae87;
+        }
+        .viewCard:active{
+            background: #1b513b;
+        }
         .wordCard{
             display: block;
             width: 70px;
@@ -101,6 +115,9 @@
             min-width: 100px;
             border-top: 3px solid #546071;
         }
+        .github-fork-ribbon:before{
+            background: #232323;
+        }
     </style>
     <script type="text/javascript" src="../src/js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="../src/js/isaac.table.js"></script>
@@ -119,8 +136,8 @@
                 { title: "大写字母", field: "lName" },
                 { title: "单词", field: "example" },
                 { title: "中文", field: "chinese" },
-                { title: "操作", field: "id",formatter:function(v){
-                    return '<a href="javascript:;" onclick="viewCard('+v+')">查看卡片</a>'
+                { title: "操作", field: "id",width:'150px',formatter:function(v){
+                    return '<button class="viewCard" href="javascript:;" onclick="viewCard('+v+')">查看卡片</button>'
                     } }
             ]],
             toolbar: [{
@@ -148,7 +165,6 @@
         };
         var table;
         function viewCard(id){
-            debugger;
             $.ajax({
                 url: backstageUrl+"table/getItemData",
                 data: { id:id},
