@@ -227,6 +227,9 @@
 .icon-view {
     background-position: -95px -120px;
 }
+.icon-book{
+    background-position:-49px -49px
+}
 /*拖动单元格*/
 .isaac_layout {
     position: absolute;
